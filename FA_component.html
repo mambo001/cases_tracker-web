@@ -1,0 +1,144 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col s4">
+			<div class="card">
+				<div class="card-content">
+					<!-- <span class="card-title">Case Details</span> -->
+
+					<ul id="surveyListCollection" class="collection with-header">
+						<li class="collection-header" style="text-align: center;">
+							<h3><b><span id="aht" style="font-weight: 400;">00:00:00</span></b></h3>
+						</li>
+						<li class="collection-item">
+							<div class="valign-wrapper" style="margin-bottom: 0px;">
+								<div class="input-field left center-align" style="min-width: 100%;">
+									<label class="active center-align" for="surveyText" style="text-align: center;font-size: 0.8rem; position: static;">CASE</label>
+									<input type="text" name="" id="surveyText" placeholder="Ex.: case-c2xd-1234" class="center-align">
+                    </div>
+									<!-- <i class="material-icons redirect-icon hide" style="margin-left: -35px;margin-top: 15px;color: #333;z-index: 1059;vertical-align: middle;">open_in_new</i> -->
+								</div>
+						</li>
+					</ul>
+				</div>
+				<div class="card-action">
+					<a id="assignBtn" class="waves-effect waves-light btn-large blue darken-2"
+						style="width: 100%; display: flex; justify-content: center;"><i class="material-icons left">assignment</i>ASSIGN</a>
+					<a id="unassignBtn" class="waves-effect waves-light btn-large blue darken-4 hide"
+						style="width: 100%; display: flex; justify-content: center;"><i class="material-icons left">assignment_return</i>UNASSIGN</a>
+				</div>
+			</div>
+		</div>
+		<div class="col s8">
+			<div class="progress" id="caseListLoader">
+				<div class="indeterminate green darken-1"></div>
+			</div>
+			<ul class="collapsible expandable fa-collapsible">
+				<!-- <li class="active">
+					<div class="collapsible-header hoverable"><i class="material-icons">view_list</i>Case List Table
+					</div>
+					<div class="collapsible-body">
+						<table id="caseList" class="mdl-data-table striped centered highlight" style="width:100%">
+						</table>
+					</div>
+				</li> -->
+				<li class="active">
+					<div class="collapsible-header hoverable"><i class="material-icons">note_add</i>Review Actions</div>
+					<div class="collapsible-body">
+						<!-- Case Review Actions -->
+						<div class="row">
+							<div class="col s12">
+								<div class="card">
+									<div class="card-content">
+										<div class="row">
+
+											<div class="input-field col s9 toggleInputs">
+												<div class="chips chips-autocomplete" id="reviewCategoriesChips"></div>
+												<label class="active">Review Categories</label>
+											</div>
+                      <div class="input-field col s3">
+												<!-- <div class="chips chips-autocomplete" id="reviewCategoriesChips"></div>
+												<label class="active">Review Categories</label> -->
+                        <p>
+                          <label>
+                            <input type="checkbox" checked="checked" />
+                            <span>RMTO</span>
+                          </label>
+                        </p>
+											</div>
+
+											<div class="input-field col s12 toggleInputs">
+												<select id="labelsSelect" multiple>
+                            <optgroup id="gtgLabelsGroup" label="">
+                              <option value="1">Option 1</option>
+                              <option value="2">Option 2</option>
+                            </optgroup>
+                            <optgroup id="ngtgLabelsGroup" label="">
+                              <option value="3">Option 3</option>
+                              <option value="4">Option 4</option>
+                            </optgroup>
+                          </select>
+												<label class="">Policy Label</label>
+											</div>
+
+											<div class="input-field col s12 toggleInputs">
+												<textarea value="" style="min-height: 70px;" placeholder="Input screenshot of survey or comments here" id="screenshotTextarea" type="text" class="materialize-textarea validate"></textarea>
+												<label for="screenshotTextarea" class="active">Screenshot or Comments</label>
+											</div>
+
+											<div class="input-field col s12 toggleInputs">
+												<select id="languageSelect">
+                            <option value="" disabled selected="selected">Select One</option><option value="af">Afrikaans (af)</option><option value="sq">Albanian (sq)</option><option value="am">Amharic (am)</option><option value="ar">Arabic (ar)</option><option value="ar-EG">Arabic (Egypt) (ar-EG)</option><option value="hy">Armenian (hy)</option><option value="az">Azerbaijani (az)</option><option value="eu">Basque (eu)</option><option value="be">Belarusian (be)</option><option value="bn">Bengali (bn)</option><option value="bs">Bosnian (bs)</option><option value="bg">Bulgarian (bg)</option><option value="my">Burmese (Myanmar) (my)</option><option value="ca">Catalan (ca)</option><option value="zh-HK">Chinese (Hong Kong) (zh-HK)</option><option value="zh-MS">Chinese (Malay) (zh-MS)</option><option value="zh-Hans">Chinese (Simplified) (zh-Hans)</option><option value="zh-SG">Chinese (Singapore) (zh-SG)</option><option value="zh-Hant">Chinese (Traditional) (zh-Hant)</option><option value="hr">Croatian (hr)</option><option value="cs">Czech (cs)</option><option value="da">Danish (da)</option><option value="nl">Dutch (nl)</option><option value="nl-BL">Dutch (Belgium) (nl-BL)</option><option value="en">English (en)</option><option value="en-AU">English (Australia) (en-AU)</option><option value="en-BL">English (Belgium) (en-BL)</option><option value="en-CA">English (Canada) (en-CA)</option><option value="en-HK">English (Hong Kong) (en-HK)</option><option value="en-IN">English (India) (en-IN)</option><option value="en-IE">English (Ireland) (en-IE)</option><option value="en-MY">English (Malaysia) (en-MY)</option><option value="en-NZ">English (New Zealand) (en-NZ)</option><option value="en-SG">English (Singapore) (en-SG)</option><option value="en-ZA">English (South Africa) (en-ZA)</option><option value="en-CH">English (Switzerland) (en-CH)</option><option value="en-GB">English (UK) (en-GB)</option><option value="et">Estonian (et)</option><option value="fa">Farsi (fa)</option><option value="fil">Filipino (fil)</option><option value="fi">Finnish (fi)</option><option value="fr">French (fr)</option><option value="fr-BL">French (Belgium) (fr-BL)</option><option value="fr-CA">French (Canada) (fr-CA)</option><option value="fr-LU">French (Luxembourg) (fr-LU)</option><option value="fr-CH">French (Switzerland) (fr-CH)</option><option value="gl">Galician (gl)</option><option value="ka">Georgian (ka)</option><option value="de">German (de)</option><option value="de-AT">German (Austria) (de-AT)</option><option value="de-BL">German (Belgium) (de-BL)</option><option value="de-LU">German (Luxembourg) (de-LU)</option><option value="de-CH">German (Switzerland) (de-CH)</option><option value="el">Greek (el)</option><option value="gu">Gujarati (gu)</option><option value="iw">Hebrew (iw)</option><option value="hi">Hindi (hi)</option><option value="hu">Hungarian (hu)</option><option value="is">Icelandic (is)</option><option value="id">Indonesian (id)</option><option value="ga">Irish (ga)</option><option value="it">Italian (it)</option><option value="it-CH">Italian (Switzerland) (it-CH)</option><option value="ja">Japanese (ja)</option><option value="kn">Kannada (kn)</option><option value="kk">Kazakh (kk)</option><option value="km">Khmer (km)</option><option value="rw">Kinyarwanda (rw)</option><option value="ko">Korean (ko)</option><option value="ky">Kyrgyz (ky)</option><option value="lo">Lao (lo)</option><option value="la">Latin (la)</option><option value="lv">Latvian (lv)</option><option value="lt">Lithuanian (lt)</option><option value="lg">Luganda (lg)</option><option value="mk">Macedonian (mk)</option><option value="mg">Malagasy (mg)</option><option value="ms">Malay (ms)</option><option value="ml">Malayalam (ml)</option><option value="mt">Maltese (mt)</option><option value="mr">Marathi (mr)</option><option value="crp">Mauritian Creole (crp)</option><option value="mn">Mongolian (mn)</option><option value="ne">Nepali (ne)</option><option value="no">Norwegian (no)</option><option value="nb">Norwegian (DO NOT USE) (nb)</option><option value="nn">Norwegian (Nynorsk) (nn)</option><option value="or">Oriya (or)</option><option value="pl">Polish (pl)</option><option value="pt">Portuguese (pt)</option><option value="pt-BR">Portuguese (Brazil) (pt-BR)</option><option value="pa">Punjabi (pa)</option><option value="rm">Rhaeto-Romance (rm)</option><option value="ro">Romanian (ro)</option><option value="ru">Russian (ru)</option><option value="ru-AZ">Russian (Azerbaijan) (ru-AZ)</option><option value="ru-BY">Russian (Belarus) (ru-BY)</option><option value="ru-KZ">Russian (Kazakhstan) (ru-KZ)</option><option value="ru-UA">Russian (Ukraine) (ru-UA)</option><option value="sr">Serbian (sr)</option><option value="si">Sinhala (si)</option><option value="sk">Slovak (sk)</option><option value="sl">Slovenian (sl)</option><option value="es">Spanish (es)</option><option value="es-419">Spanish (Latin America) (es-419)</option><option value="sw">Swahili (sw)</option><option value="sv">Swedish (sv)</option><option value="ta">Tamil (ta)</option><option value="te">Telugu (te)</option><option value="th">Thai (th)</option><option value="tr">Turkish (tr)</option><option value="uk">Ukrainian (uk)</option><option value="ur">Urdu (ur)</option><option value="uz">Uzbek (uz)</option><option value="vi">Vietnamese (vi)</option><option value="cy">Welsh (cy)</option><option value="yi">Yiddish (yi)</option><option value="yo">Yoruba (yo)</option><option value="zu">Zulu (zu)</option> 
+                            </select>
+												<label> Language Select</label>
+											</div>
+
+											<div class="input-field col s12 toggleInputs">
+												<select id="surveyTypeSelect">
+                            <option value="" disabled selected="selected">Choose your option</option>
+                              <option value="BLS1">API BS</option>
+                              <option value="BLS1YT">API BSYT</option>
+                              <option value="BLS1NotYT">API BSNotYT</option>
+                              <option value="BLS2">BLS2</option>
+                          </select>
+												<label> Survey Type Select</label>
+											</div>
+
+											<!-- <div class="input-field col s12 toggleInputs hide">
+                          <select id="labelsSelect" multiple>
+
+                          </select>
+                          <label class="">Policy Label</label>
+                        </div> -->
+
+											<!-- <div class="input-field col s12 toggleInputs hide">
+                          <textarea id="CRTextarea" class="materialize-textarea" style="min-height: 170px; height: 220px;"></textarea>
+                          <label class="active" for="CRTextarea">Canned Response</label>
+                        </div> -->
+
+										</div>
+
+
+									</div>
+
+									<div class="card-action">
+										<a class="btn waves-light waves-effect btn-green decisionBtn" id="compliantBtn"
+											data-decision="compliant"><i class="material-icons left">thumb_up</i>Start</a>
+										<a class="btn waves-light waves-effect btn-red decisionBtn" id="noncompliantBtn"
+											data-decision="noncompliant"><i class="material-icons left">thumb_down</i>Needs
+											Edit</a>
+										<a class="btn waves-light waves-effect blue-grey lighten-5 decisionBtn hide"
+											id="backBtn"
+											style="color: #212121;"><i class="material-icons left">arrow_back</i>Back</a>
+										<a class="btn waves-light waves-effect green darken-2 decisionBtn hide"
+											id="finishBtn"><i class="material-icons left">send</i>Finish</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

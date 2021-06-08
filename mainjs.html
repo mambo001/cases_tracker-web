@@ -1,0 +1,1275 @@
+<script>
+	//////////////////
+//Materialize Init
+// document.querySelector('#internetSpeed').textContent = `${navigator.connection.downlink || 0} Mbps`;
+document.addEventListener('DOMContentLoaded', function() {
+  var sidenavElem = document.querySelector('.sidenav');
+  M.Sidenav.init(sidenavElem, {
+    preventScrolling: false
+  });
+  console.log(sidenavElem);
+  var instance = M.Sidenav.getInstance(sidenavElem);
+  var sidenavToggleBtn = document.querySelector("#sidenav-toggle-btn");
+  var sidenavIcon = sidenavToggleBtn.querySelector(".material-icons");
+  instance.open();
+  console.log("icon: " + sidenavIcon.textContent)
+  console.log(instance);
+  console.log(instance.isOpen);
+
+  sidenavToggleBtn.addEventListener("click", toggleSidenav);
+  
+  var collapsibleElem = document.querySelectorAll('.collapsible');
+  var collapsibleInstance = M.Collapsible.init(collapsibleElem, {});
+  
+  google.script.run.withSuccessHandler(setUserData).getUserInfo();
+
+
+  document.querySelector('#surveyText').addEventListener('input', (e) => {
+    if(!e.target.value){
+      document.querySelector('#assignBtn').classList.add('disabled');
+    } else {
+      document.querySelector('#assignBtn').classList.remove('disabled');
+    }
+  });
+
+
+  // loadView({func: "loadFAView"});
+
+  // google.script.run.withSuccessHandler(data => loadCaseListTable(data)).getCaseListData();
+});
+
+let data={countrySelectOptions:[{name:"Afghanistan"},{name:"Ã…land Islands"},{name:"Albania"},{name:"Algeria"},{name:"American Samoa"},{name:"Andorra"},{name:"Angola"},{name:"Anguilla"},{name:"Antarctica"},{name:"Antigua and Barbuda"},{name:"Argentina"},{name:"Armenia"},{name:"Aruba"},{name:"Australia"},{name:"Austria"},{name:"Azerbaijan"},{name:"Bahamas"},{name:"Bahrain"},{name:"Bangladesh"},{name:"Barbados"},{name:"Belarus"},{name:"Belgium"},{name:"Belize"},{name:"Benin"},{name:"Bermuda"},{name:"Bhutan"},{name:"Bolivia"},{name:"Bosnia and Herzegovina"},{name:"Botswana"},{name:"Bouvet Island"},{name:"Brazil"},{name:"British Indian Ocean Territory"},{name:"Brunei Darussalam"},{name:"Bulgaria"},{name:"Burkina Faso"},{name:"Burundi"},{name:"Cambodia"},{name:"Cameroon"},{name:"Canada"},{name:"Cape Verde"},{name:"Cayman Islands"},{name:"Central African Republic"},{name:"Chad"},{name:"Chile"},{name:"China"},{name:"Christmas Island"},{name:"Cocos (Keeling) Islands"},{name:"Colombia"},{name:"Comoros"},{name:"Congo"},{name:"Congo"},{name:"The Democratic Republic of The Cook Islands"},{name:"Costa Rica"},{name:"Cote D'ivoire"},{name:"Croatia"},{name:"Cuba"},{name:"Cyprus"},{name:"Czech Republic"},{name:"Denmark"},{name:"Djibouti"},{name:"Dominica"},{name:"Dominican Republic"},{name:"Ecuador"},{name:"Egypt"},{name:"El Salvador"},{name:"Equatorial Guinea"},{name:"Eritrea"},{name:"Estonia"},{name:"Ethiopia"},{name:"Falkland Islands (Malvinas)"},{name:"Faroe Islands"},{name:"Fiji"},{name:"Finland"},{name:"France"},{name:"French Guiana"},{name:"French Polynesia"},{name:"French Southern Territories"},{name:"Gabon"},{name:"Gambia"},{name:"Georgia"},{name:"Germany"},{name:"Ghana"},{name:"Gibraltar"},{name:"Greece"},{name:"Greenland"},{name:"Grenada"},{name:"Guadeloupe"},{name:"Guam"},{name:"Guatemala"},{name:"Guernsey"},{name:"Guinea"},{name:"Guinea-bissau"},{name:"Guyana"},{name:"Haiti"},{name:"Heard Island and Mcdonald Islands"},{name:"Holy See (Vatican City State)"},{name:"Honduras"},{name:"Hong Kong"},{name:"Hungary"},{name:"Iceland"},{name:"India"},{name:"Indonesia"},{name:"Iran"},{name:"Iraq"},{name:"Ireland"},{name:"Isle of Man"},{name:"Israel"},{name:"Italy"},{name:"Jamaica"},{name:"Japan"},{name:"Jersey"},{name:"Jordan"},{name:"Kazakhstan"},{name:"Kenya"},{name:"Kiribati"},{name:"Korea"},{name:"Democratic People's Republic of Korea"},{name:"Republic of Kuwait"},{name:"Kyrgyzstan"},{name:"Lao People's Democratic Republic"},{name:"Latvia"},{name:"Lebanon"},{name:"Lesotho"},{name:"Liberia"},{name:"Libyan Arab Jamahiriya"},{name:"Liechtenstein"},{name:"Lithuania"},{name:"Luxembourg"},{name:"Macao"},{name:"Macedonia"},{name:"The Former Yugoslav Republic of Madagascar"},{name:"Malawi"},{name:"Malaysia"},{name:"Maldives"},{name:"Mali"},{name:"Malta"},{name:"Marshall Islands"},{name:"Martinique"},{name:"Mauritania"},{name:"Mauritius"},{name:"Mayotte"},{name:"Mexico"},{name:"Federated States of Micronesia"},{name:"Moldova"},{name:"Monaco"},{name:"Mongolia"},{name:"Montenegro"},{name:"Montserrat"},{name:"Morocco"},{name:"Mozambique"},{name:"Myanmar"},{name:"Namibia"},{name:"Nauru"},{name:"Nepal"},{name:"Netherlands"},{name:"Netherlands Antilles"},{name:"New Caledonia"},{name:"New Zealand"},{name:"Nicaragua"},{name:"Niger"},{name:"Nigeria"},{name:"Niue"},{name:"Norfolk Island"},{name:"Northern Mariana Islands"},{name:"Norway"},{name:"Oman"},{name:"Pakistan"},{name:"Palau"},{name:"Palestinian Territory Occupied"},{name:"Panama"},{name:"Papua New Guinea"},{name:"Paraguay"},{name:"Peru"},{name:"Philippines"},{name:"Pitcairn"},{name:"Poland"},{name:"Portugal"},{name:"Puerto Rico"},{name:"Qatar"},{name:"Reunion"},{name:"Romania"},{name:"Russia"},{name:"Rwanda"},{name:"Saint Helena"},{name:"Saint Kitts and Nevis"},{name:"Saint Lucia"},{name:"Saint Pierre and Miquelon"},{name:"Saint Vincent and The Grenadines"},{name:"Samoa"},{name:"San Marino"},{name:"Sao Tome and Principe"},{name:"Saudi Arabia"},{name:"Senegal"},{name:"Serbia"},{name:"Seychelles"},{name:"Sierra Leone"},{name:"Singapore"},{name:"Slovakia"},{name:"Slovenia"},{name:"Solomon Islands"},{name:"Somalia"},{name:"South Africa"},{name:"South Georgia and The South Sandwich Islands"},{name:"Spain"},{name:"Sri Lanka"},{name:"Sudan"},{name:"Suriname"},{name:"Svalbard and Jan Mayen"},{name:"Swaziland"},{name:"Sweden"},{name:"Switzerland"},{name:"Syrian Arab Republic"},{name:"Taiwan"},{name:"China"},{name:"Tajikistan"},{name:"Tanzania"},{name:"Thailand"},{name:"Timor-leste"},{name:"Togo"},{name:"Tokelau"},{name:"Tonga"},{name:"Trinidad and Tobago"},{name:"Tunisia"},{name:"Turkey"},{name:"Turkmenistan"},{name:"Turks and Caicos Islands"},{name:"Tuvalu"},{name:"Uganda"},{name:"Ukraine"},{name:"United Arab Emirates"},{name:"United Kingdom"},{name:"United States"},{name:"United States Minor Outlying Islands"},{name:"Uruguay"},{name:"Uzbekistan"},{name:"Vanuatu"},{name:"Venezuela"},{name:"Viet Nam"},{name:"Virgin Islands British"},{name:"Virgin Islands U.S."},{name:"Wallis and Futuna"},{name:"Western Sahara"},{name:"Yemen"},{name:"Zambia"},{name:"Zimbabwe"}],languageSelectOptions:[{name:"Afrikaans (af)",langCode:"af"},{name:"Albanian (sq)",langCode:"sq"},{name:"Amharic (am)",langCode:"am"},{name:"Arabic (ar)",langCode:"ar"},{name:"Arabic (Egypt) (ar-EG)",langCode:"ar-EG"},{name:"Armenian (hy)",langCode:"hy"},{name:"Azerbaijani (az)",langCode:"az"},{name:"Basque (eu)",langCode:"eu"},{name:"Belarusian (be)",langCode:"be"},{name:"Bengali (bn)",langCode:"bn"},{name:"Bosnian (bs)",langCode:"bs"},{name:"Bulgarian (bg)",langCode:"bg"},{name:"Burmese (Myanmar) (my)",langCode:"my"},{name:"Catalan (ca)",langCode:"ca"},{name:"Chinese (Hong Kong) (zh-HK)",langCode:"zh-HK"},{name:"Chinese (Malay) (zh-MS)",langCode:"zh-MS"},{name:"Chinese (Simplified) (zh-Hans)",langCode:"zh-Hans"},{name:"Chinese (Singapore) (zh-SG)",langCode:"zh-SG"},{name:"Chinese (Traditional) (zh-Hant)",langCode:"zh-Hant"},{name:"Croatian (hr)",langCode:"hr"},{name:"Czech (cs)",langCode:"cs"},{name:"Danish (da)",langCode:"da"},{name:"Dutch (nl)",langCode:"nl"},{name:"Dutch (Belgium) (nl-BL)",langCode:"nl-BL"},{name:"English (en)",langCode:"en"},{name:"English (Australia) (en-AU)",langCode:"en-AU"},{name:"English (Belgium) (en-BL)",langCode:"en-BL"},{name:"English (Canada) (en-CA)",langCode:"en-CA"},{name:"English (Hong Kong) (en-HK)",langCode:"en-HK"},{name:"English (India) (en-IN)",langCode:"en-IN"},{name:"English (Ireland) (en-IE)",langCode:"en-IE"},{name:"English (Malaysia) (en-MY)",langCode:"en-MY"},{name:"English (New Zealand) (en-NZ)",langCode:"en-NZ"},{name:"English (Singapore) (en-SG)",langCode:"en-SG"},{name:"English (South Africa) (en-ZA)",langCode:"en-ZA"},{name:"English (Switzerland) (en-CH)",langCode:"en-CH"},{name:"English (UK) (en-GB)",langCode:"en-GB"},{name:"Estonian (et)",langCode:"et"},{name:"Farsi (fa)",langCode:"fa"},{name:"Filipino (fil)",langCode:"fil"},{name:"Finnish (fi)",langCode:"fi"},{name:"French (fr)",langCode:"fr"},{name:"French (Belgium) (fr-BL)",langCode:"fr-BL"},{name:"French (Canada) (fr-CA)",langCode:"fr-CA"},{name:"French (Luxembourg) (fr-LU)",langCode:"fr-LU"},{name:"French (Switzerland) (fr-CH)",langCode:"fr-CH"},{name:"Galician (gl)",langCode:"gl"},{name:"Georgian (ka)",langCode:"ka"},{name:"German (de)",langCode:"de"},{name:"German (Austria) (de-AT)",langCode:"de-AT"},{name:"German (Belgium) (de-BL)",langCode:"de-BL"},{name:"German (Luxembourg) (de-LU)",langCode:"de-LU"},{name:"German (Switzerland) (de-CH)",langCode:"de-CH"},{name:"Greek (el)",langCode:"el"},{name:"Gujarati (gu)",langCode:"gu"},{name:"Hebrew (iw)",langCode:"iw"},{name:"Hindi (hi)",langCode:"hi"},{name:"Hungarian (hu)",langCode:"hu"},{name:"Icelandic (is)",langCode:"is"},{name:"Indonesian (id)",langCode:"id"},{name:"Irish (ga)",langCode:"ga"},{name:"Italian (it)",langCode:"it"},{name:"Italian (Switzerland) (it-CH)",langCode:"it-CH"},{name:"Japanese (ja)",langCode:"ja"},{name:"Kannada (kn)",langCode:"kn"},{name:"Kazakh (kk)",langCode:"kk"},{name:"Khmer (km)",langCode:"km"},{name:"Kinyarwanda (rw)",langCode:"rw"},{name:"Korean (ko)",langCode:"ko"},{name:"Kyrgyz (ky)",langCode:"ky"},{name:"Lao (lo)",langCode:"lo"},{name:"Latin (la)",langCode:"la"},{name:"Latvian (lv)",langCode:"lv"},{name:"Lithuanian (lt)",langCode:"lt"},{name:"Luganda (lg)",langCode:"lg"},{name:"Macedonian (mk)",langCode:"mk"},{name:"Malagasy (mg)",langCode:"mg"},{name:"Malay (ms)",langCode:"ms"},{name:"Malayalam (ml)",langCode:"ml"},{name:"Maltese (mt)",langCode:"mt"},{name:"Marathi (mr)",langCode:"mr"},{name:"Mauritian Creole (crp)",langCode:"crp"},{name:"Mongolian (mn)",langCode:"mn"},{name:"Nepali (ne)",langCode:"ne"},{name:"Norwegian (no)",langCode:"no"},{name:"Norwegian (DO NOT USE) (nb)",langCode:"nb"},{name:"Norwegian (Nynorsk) (nn)",langCode:"nn"},{name:"Oriya (or)",langCode:"or"},{name:"Polish (pl)",langCode:"pl"},{name:"Portuguese (pt)",langCode:"pt"},{name:"Portuguese (Brazil) (pt-BR)",langCode:"pt-BR"},{name:"Punjabi (pa)",langCode:"pa"},{name:"Rhaeto-Romance (rm)",langCode:"rm"},{name:"Romanian (ro)",langCode:"ro"},{name:"Russian (ru)",langCode:"ru"},{name:"Russian (Azerbaijan) (ru-AZ)",langCode:"ru-AZ"},{name:"Russian (Belarus) (ru-BY)",langCode:"ru-BY"},{name:"Russian (Kazakhstan) (ru-KZ)",langCode:"ru-KZ"},{name:"Russian (Ukraine) (ru-UA)",langCode:"ru-UA"},{name:"Serbian (sr)",langCode:"sr"},{name:"Sinhala (si)",langCode:"si"},{name:"Slovak (sk)",langCode:"sk"},{name:"Slovenian (sl)",langCode:"sl"},{name:"Spanish (es)",langCode:"es"},{name:"Spanish (Latin America) (es-419)",langCode:"es-419"},{name:"Swahili (sw)",langCode:"sw"},{name:"Swedish (sv)",langCode:"sv"},{name:"Tamil (ta)",langCode:"ta"},{name:"Telugu (te)",langCode:"te"},{name:"Thai (th)",langCode:"th"},{name:"Turkish (tr)",langCode:"tr"},{name:"Ukrainian (uk)",langCode:"uk"},{name:"Urdu (ur)",langCode:"ur"},{name:"Uzbek (uz)",langCode:"uz"},{name:"Vietnamese (vi)",langCode:"vi"},{name:"Welsh (cy)",langCode:"cy"},{name:"Yiddish (yi)",langCode:"yi"},{name:"Yoruba (yo)",langCode:"yo"},{name:"Zulu (zu)",langCode:"zu"}],SRCategories:[{name:"Review-SurveyStarted"},{name:"Review-NeedsInfo"},{name:"Review-Consult"},{name:"Review-Non-EN"},{name:"Review-HealthMedical"},{name:"Review-Swiss"},{name:"Review-Policypoll"},{name:"Review-IntRecurring"},{name:"Review-AdsLab-AdMob"},{name:"Review-AdsLab-Pubnet"},{name:"Review-IntResponses"},{name:"Review-Targeting"},{name:"Review-NielsenDMA"},{name:"Review-RMK"},{name:"Review-Zip"},{name:"Review-Surveys360"},{name:"Review-Enterprise-Invoice"},{name:"Review-Enterprise-SharedBalance"},{name:"Review-OutsideEWOQ"},{name:"TRN"},{name:"SurveyDeleted"},{name:"Support-RefundCoupon"},{name:"Review-Split"},{name:"Overpaid"},{name:"Review-Language"},{name:"Review-R&CGeneral"},{name:"Review-SexStarted"},{name:"Review-Financial"},{name:"Review-HealthStarted"},{name:"Review-PoliticalStarted"},{name:"Review-TechStarted"},{name:"Review-AlcoholStarted"},{name:"Review-GamblingStarted"},{name:"Review-TradeUnion"},{name:"Review-OtherForbidden"},{name:"Review-MachineTranslation"},{name:"Review-IncorrectTargeting"},{name:"Review-AdultContent"},{name:"Review-Capitalization"},{name:"Review-CharacterLimit(ContentTruncated)"},{name:"Review-ElectionPolling"},{name:"Review-General:Clarity"},{name:"Review-General:DoNotAnswer"},{name:"Review-General:FalseInformation"},{name:"Review-General:GimmickySymbols"},{name:"Review-General:IncorrectQuestionFeature"},{name:"Review-General:AnswerDuplicate/Overlap"},{name:"Review-General:Pre-Screener"},{name:"Review-Health:Vivid"},{name:"Review-Health:OtherNon-Starter"},{name:"Review-Health:GOROnly"},{name:"Review-ImageUnclear"},{name:"Review-InappropriateLanguage"},{name:"Review-LanguageMismatch"},{name:"Review-QuestionShouldScreen"},{name:"Review-ModifyScreeningQuestion"},{name:"Review-MultipleQuestions"},{name:"Review-NeedsPermissionScreen"},{name:"Review-NOTA:AgeQuestions"},{name:"Review-NotaMissing"},{name:"Review-Offensive:Death"},{name:"Review-Offensive:GeneralLiking"},{name:"Review-Offensive:Guns"},{name:"Review-Offensive:Other"},{name:"Review-Offensive:Violence"},{name:"Review-Offensive:Wars"},{name:"Review-OpenEndedNumeric"},{name:"Review-OpenEndedSingleLetter"},{name:"Review-PartialPin(AnswerNotPinned)"},{name:"Review-PII"},{name:"Review-PipingPlaceholderFormat"},{name:"Review-PolicyPolling:NeedsOptOut"},{name:"Review-PolicyPolling:Phrasing"},{name:"Review-PushPolling:Influence"},{name:"Review-PushPolling:CallToAction"},{name:"Review-PushPolling:Ad"},{name:"Review-QuestionType:Multi Answer"},{name:"Review-QuestionType:SingleAnswer"},{name:"Review-RangesMismatch"},{name:"Review-SensitiveDemo(Age/Gender/Race)"},{name:"Review-SensitiveDemo(Religion/Immigration/Sex):GOR"},{name:"Review-SensitiveDemo(Religion/Immigration/Sex):NeedsOptOut"},{name:"Review-SensitiveSubjects:GOROnly"},{name:"Review-SensitiveSubjects:Non-Starter"},{name:"Review-SensitiveSubjects:NeedsOptOut"},{name:"Review-Spelling"},{name:"Review-Video:Length"},{name:"Review-Video:Multiple"},{name:"Review-Video:Private"}],supportCategories:[{name:"Support-NoActionNeeded"},{name:"Support-CreationWarm"},{name:"Support-BLSPushBack"},{name:"Support-RMK"},{name:"Support-Zip"},{name:"Support-AccountCreation"},{name:"Support-AddOwner"},{name:"Support-Adwords"},{name:"Support-BuyResponses"},{name:"Support-Creation"},{name:"Support-Contact"},{name:"Support-DSCannotViewDownload"},{name:"Support-DSShareResult"},{name:"Support-DSDataDiscrepancy"},{name:"Support-DSFeaturesNotWorking"},{name:"Support-DSCombineResults"},{name:"Support-DSInterpretResult"},{name:"Support-DSHCTutorial"},{name:"Support-DSGoogleAnalytics"},{name:"Support-DSOther"},{name:"Support-Flagged/Enterprise"},{name:"Support-Flagged/Internal"},{name:"Support-Flagged/Restarted"},{name:"Support-Flagged/Stopped"},{name:"Support-General"},{name:"Support-IncTest"},{name:"Support-IncToolBug"},{name:"Support-Methodology"},{name:"Support-NeedsMod"},{name:"Support-NoQ"},{name:"Support-Pause/Stop"},{name:"Support-Payment/Billing"},{name:"Support-Policy"},{name:"Support-Pricing"},{name:"Support-ProductFeedback"},{name:"Support-RefundCoupon"},{name:"Support-Reporting/Analysis"},{name:"Support-Spam"},{name:"Support-Targeting"},{name:"Support-TrackingSubscriptions"},{name:"Support-UserFeedback(not GOR)"},{name:"Support-Websat"},{name:"Support-WhitelistSupport"},{name:"Support-Googler"},{name:"Support-Enterprise-Invoice"},{name:"Support-Enterprise-SharedBalance"},{name:"Support-AccountLinking"},{name:"Support-Surveys360Client"},{name:"Support-CustomSalesLeads"},{name:"Support-NeedsInfo"},{name:"Support-Consult"},{name:"Support-OpinionRewards"},{name:"Support-Chat"},{name:"Support-360Reseller"},{name:"Support-360"},{name:"Support-Deleted"},{name:"Support-Inbound"},{name:"Support-Followup"},{name:"Support-Feedback"},{name:"Support-SameIssue"},{name:"Support-Deleted"},{name:"Support-NonEn"},{name:"Support-NonGCS"},{name:"Support-NeedsAttention"},{name:"Support-AccountManagement"},{name:"TRN"},{name:"Overpaid"},{name:"Routed from Other Product"}],pubCategories:[{name:"Pub-AddOwner"},{name:"Pub-AdvancedTab"},{name:"Pub-HouseSurveys"},{name:"Pub-Frequency/Metering"},{name:"Pub-RHS"},{name:"Pub-AnchoredPrompt"},{name:"Pub-Triggerprompt/Async"},{name:"Pub-Callback"},{name:"Pub-CountryFiltering"},{name:"Pub-DomainFilter/refer"},{name:"Pub-PromptTitle"},{name:"Pub-PublisherExtendedAccessPeriod"},{name:"Pub-aaumessage"},{name:"Pub-Staging"},{name:"Pub-MobilePromptMessage"},{name:"Pub-ZipcodeFilter"},{name:"Pub-Selfie"},{name:"Pub-Strategic"},{name:"Pub-Policy"},{name:"Pub-ReportingDashboard"},{name:"Pub-AdSense/Payment"},{name:"Pub-Troubleshoot/Investigate"},{name:"Pub-Troubleshoot/InvestigateTriggerAsync"},{name:"Pub-Troubleshoot/InvestigateAnchored"},{name:"Pub-Troubleshoot/InvestigateCallback"},{name:"Pub-Troubleshoot/InvestigateCan'tSignUp"},{name:"Pub-Troubleshoot/InvestigateInventory"},{name:"Pub-AdvancedOthers"},{name:"Pub-FrequencyMeteringOthers"},{name:"Pub-TriggerPromptOthers"},{name:"Pub-CallbackOthers"},{name:"Pub-RHSOthers"},{name:"Pub-AnchoredPromptOthers"},{name:"Pub-dev"},{name:"Pub-dev>whitelist"},{name:"Pub-dev>approve"},{name:"Pub-SameIssue"},{name:"Pub-NeedsInfo"},{name:"Pub-Consult"},{name:"Pub-CallRequest"},{name:"Pub-CallDone"},{name:"Pub-Reach out"},{name:"Pub-Disabled"},{name:"Pub-SelfDisable"},{name:"Pub-General"},{name:"Pub-NewSelfie"},{name:"Pub-NewStrategic"},{name:"Pub-Feedback"},{name:"Pub-ProductFeedback"},{name:"Pub-UserFeedback"},{name:"TRN"},{name:"Support-Websat"}],partnershipCategories:[{name:"Partnership > DCLK - DBM > Approved"},{name:"Partnership > DCLK - DBM > Rejected"},{name:"Partnership > DCLK - DBM - Auto Reject"},{name:"Partnership > DCLK - DCM > Approved"},{name:"Partnership > DCLK - DCM > Rejected"},{name:"Partnership > DCLK - DCM - Auto Reject"},{name:"Partnership > DCLK - DS > Approved"},{name:"Partnership > DCLK - DS > Rejected"},{name:"Partnership > DCLK - DS - Auto Reject"},{name:"Partnership > GA360 - DS > Approved"},{name:"Partnership > GA360 - DS > Rejected"},{name:"Partnership > GA360 - GTM > Approved"},{name:"Partnership > GA360 - GTM > Rejected"},{name:"Partnership > GA360 - Optimize > Approved"},{name:"Partnership > GA360 - Optimize > Rejected"},{name:"Partnership > Forum Access Request > Approved"},{name:"Partnership > Forum Access Request > Rejected"},{name:"Partnership > GACP - Support"},{name:"Partnership > GACP - Escalate"},{name:"Partnership > DCLCK - Creative > Approved"},{name:"Partnership > DCLCK - Creative > Rejected"},{name:"Partnership > DCLCK - Creative - Auto Reject"},{name:"Partnership > DCLCK - Surveys > Approved"},{name:"Partnership > DCLCK - Surveys > Rejected"},{name:"Partnership-Consult"},{name:"TRN"}],nonTransactionCategories:[{name:"NonTransaction-Data/Reporting"},{name:"NonTransaction-Systembug"},{name:"NonTransaction-Test/Experiment"},{name:"NonTransaction-Other"}],studyChecker:{GTGLabel:[{label:"Refers to Sex",cr:"Your survey includes content with reference to sex."},{label:"Weight Loss Programs",cr:"Your survey includes content about weight loss programs."},{label:"Allowed Birth Control",cr:"Your survey includes content about allowed birth control."},{label:"Political Issues",cr:"Your survey includes content about political issues."},{label:"Political Candidates",cr:"Your survey includes content about political candidates."},{label:"Video Games",cr:"Your survey includes content about video games."},{label:"Alcohol",cr:"Your survey includes content about alcohol."},{label:"Gambling",cr:"Your survey includes content about gambling."}],NGTGLabel:[{label:"Adult Activities",cr:"Your survey includes content about adult activities."},{label:"Sexual Behavior",cr:"Your survey includes content about sexual behavior."},{label:"Drugs",cr:"Your survey includes content about drugs."},{cr:"Your survey includes content about guns.",label:"Guns"},{cr:'Your survey contains a spelling or grammatical error. Please correct it by editing the answer option "" into "".',label:"Spelling and Grammar"},{cr:"Your survey has answer options in a different language than the question.",label:"Wrong Language"},{cr:'Questions and answers should be grammatically clear, contextually relevant and directly associate with your survey content. Please edit the answer option "" to make it compliant.',label:"Garbage Text"},{cr:'The question doesn\'t seem to match with the answer options. Please edit or change the answer option/s "".',label:"Irrelevant"},{cr:'Your survey already includes a "None of the Above" option by default.',label:"None of the Above Answer"},{cr:"Your survey includes content about financial status.",label:"Financial Status"},{cr:"Your survey includes content about getting rich.",label:"Get Rich"},{cr:"Your survey includes content about loans or lending services.",label:"Loans"},{cr:"Your survey includes content about hospitals or health care facilities.",label:"Hospitals"},{cr:"Your survey includes content about weight loss pills.",label:"Weight Loss Pills"},{cr:"Your survey includes content about OTC drugs",label:"OTC Drugs"},{cr:"Your survey includes content about non-OTC drugs.",label:"Non-OTC Drugs"},{cr:"Your survey includes content about health conditions.",label:"Health Conditions"},{cr:"Your survey includes content about cosmetic procedures.",label:"Cosmetic Procedures"},{cr:"Your survey includes content about sexual health.",label:"Sexual Health"},{cr:"Your survey includes content about birth control products or methods.",label:"Disallowed Birth Control"},{cr:"Your survey includes content about medical treatments.",label:"Medical Treatments"},{cr:"Your survey contains inappropriate language.",label:"Inappropriate Language"},{cr:"Your survey includes content about harassment.",label:"Harassment"},{cr:"Your survey includes content about political issues.",label:"Political Issues"},{cr:"Your survey includes content about political candidates.",label:"Political Candidates"},{cr:"Your survey includes content about political affiliation.",label:"Political Affiliation"},{cr:"Your survey includes content about age.",label:"Age"},{cr:"Your survey includes content about gender",label:"Gender"},{cr:"Your survey includes content about sexual orientation.",label:"Sexual Orientation"},{cr:"Your survey includes content about race or ethnicity.",label:"Race Ethnicity"},{cr:"Your survey includes content about religion.",label:"Religion"},{cr:"Your survey includes content about immigration or immigrants.",label:"Immigration"},{cr:"Your survey includes content about death.",label:"Death"},{cr:"Your survey includes content about criminal record.",label:"Past Criminal Record"},{cr:"Your survey includes content about personally identifiable information.",label:"PII"},{cr:"Your survey includes content about alcohol.",label:"Alcohol"},{cr:"Your survey includes content about gambling.",label:"Gambling"},{cr:"Your survey includes content about push polling or promotion.",label:"Push Polling"},{cr:"Your survey includes content about trade union.",label:"Trade Union"},{cr:"Your survey includes content about _____.",label:"Other Forbidden (any other reason that is not captured by other policies)"}]}};
+  
+  
+
+
+//Variable Declaration/Instantiation
+let FAViewBtn = document.querySelector('#FAViewBtn'),
+  app = document.querySelector("#app"),
+  recentCasesTable = document.querySelector("#recentCasesTable"),
+  finishedCasesTotal = document.querySelector("#finishedCasesTotal"),
+  dailyRequiredCount = document.querySelector("#dailyRequiredCount"),
+  errorRatePercentage = document.querySelector("#errorRatePercentage"),
+  surveyText = document.querySelector('#newSurveyText'),
+  assignBtn = document.querySelector('#assignBtn'),
+  unassignBtn = document.querySelector('#unassignBtn'),
+  needsInfoBtn = document.querySelector('#needsInfoBtn'),
+  userData;
+
+//Inputs
+const queueSelect = document.querySelector('#queueSelect'),
+      searchInput = document.querySelector('#searchInput'),
+      countryInput = document.querySelector('#countryInput'),
+      languageInput = document.querySelector('#languageInput');
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+});
+
+const LToast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 15000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+});
+
+
+//////////////////
+//Event Listeners
+FAViewBtn.addEventListener('click', loadFAView);
+
+console.log(searchInput)
+// searchInput.addEventListener("input", getResults);
+countryInput.addEventListener('input', countryListener);
+languageInput.addEventListener('input', languageListener);
+
+// Queue Select Form Event Listener
+queueSelect.addEventListener('change', () => {
+    let selected = queueSelect.options[queueSelect.selectedIndex].value;
+    
+    // TODO toggle decision
+    const toggleNonSRBtns = () => {
+      let decisionBtns = document.querySelectorAll('.decisionBtn:not(.secondaryDecisionBtn)');
+      let secondaryDecisionBtn = document.querySelectorAll('.secondaryDecisionBtn');
+
+      decisionBtns.forEach(btn => {
+        btn.classList.add('hide');
+      });
+
+      secondaryDecisionBtn.forEach(btn => {
+        btn.classList.remove('hide');
+      })
+
+    };
+
+    selected != "Survey Review" ? toggleNonSRBtns() : toggleFADecisionBtns();
+
+    let categoryData = getSelectedQueue();
+
+    let categoryArray = categoryData.map(e => e.name);
+    let currentChipsData = categoryArray.reduce((o, key) => ({ ...o, [key]: ""}), {});
+    let reviewCategoriesChips = document.querySelector('.chips#reviewCategoriesChips');
+    var instances = M.Chips.init(reviewCategoriesChips, {
+          autocompleteOptions: {
+            data: currentChipsData,
+            limit: Infinity,
+            minLength: 1
+          },
+          placeholder: 'Review-SurveyStarted',
+          secondaryPlaceholder: '+Review~',
+    });
+
+
+
+    // Not prio
+    // let enableCaseAlarmValue = JSON.parse(settings).case_reminder;
+    
+    // // alarm timer
+    // // getCurrentQueue();
+    // if (enableCaseAlarmValue === true){
+    //     getCurrentQueue();
+    // } else {
+    //   console.log("Alarm is set to: " + enableCaseAlarmValue);
+    // }
+});
+
+// RMTO Listener
+rmto.addEventListener('change', () => {
+
+    let reviewCategoriesChips = document.querySelector('.chips#reviewCategoriesChips');
+    let reviewCategoriesChipsInstance = M.Chips.getInstance(reviewCategoriesChips);
+    let reviewCategoriesChipsData = reviewCategoriesChipsInstance.chipsData;
+
+    // console.log(reviewCategoriesChipsData);
+
+    if (rmto.checked === true) {
+      reviewCategoriesChipsInstance.addChip({
+        tag: 'Review-ReviewedMoreThanOnce',
+        image: '',
+      });
+
+      console.log(reviewCategoriesChipsInstance.chipsData)
+    } else {
+      let rmtoTag = reviewCategoriesChipsData.map(x => x.tag).indexOf('Review-ReviewedMoreThanOnce');
+      reviewCategoriesChipsInstance.deleteChip(rmtoTag);
+    }
+});
+
+
+// homeBtn.addEventListener('click', loadHome);
+// FAViewBtn.addEventListener('click', loadFAView);
+// QAViewBtn.addEventListener('click', loadQAView);
+
+function queueToggle(queueSelected){
+    console.log('Selected: ' + queueSelected);
+    // Not prio
+    // if (queueSelected == "Survey Review") {
+    //     surveyReviewQueue();
+    // } else if(queueSelected == "Support") {
+    //     supportQueue();
+    // } else if(queueSelected == "Publisher") {
+    //     publisherQueue();
+    // } else if(queueSelected == "Publisher-New") {
+    //   publisherNewQueue();
+    // }else if(queueSelected == "Publisher-Support") {
+    //   publisherSupportQueue();
+    // } else if(queueSelected == "Partnership"){
+    //     partnershipQueue();
+    // } else if(queueSelected == "NonTransaction"){
+    //     nonTransactionQueue();
+    // } else {
+    //     console.log('Invalid queue: ' + queueSelected);
+    // }
+}
+
+function doSurveyDecision(e){
+  if  (!localStorage.assigned){
+    console.log("There's no assigned survey");
+    } else {
+      let existing = localStorage.getItem("assigned");
+      existing = existing ? JSON.parse(existing) : {};
+      existing["surveyDecision"] = e.currentTarget.dataset.decision;
+      localStorage.setItem("assigned", JSON.stringify(existing));
+    }
+}
+
+function toggleFADecisionBtns(e){
+  let decisionBtns = document.querySelectorAll('.decisionBtn');
+
+  console.log();
+
+  decisionBtns.forEach(btn => {
+    btn.classList.toggle('hide');
+  });
+
+}
+
+function initLabelsSelect(){
+
+  let data={compliantOptions:[{text:"Refers to Sex",value:"Your survey includes content with reference to sex."},{text:"Weight Loss Programs",value:"Your survey includes content about weight loss programs."},{text:"Allowed Birth Control",value:"Your survey includes content about allowed birth control."},{text:"Political Issues",value:"Your survey includes content about political issues."},{text:"Political Candidates",value:"Your survey includes content about political candidates."},{text:"Video Games",value:"Your survey includes content about video games."},{text:"Alcohol",value:"Your survey includes content about alcohol."},{text:"Gambling",value:"Your survey includes content about gambling."}],noncompliantOptions:[{text:"Adult Activities",value:"Your survey includes content about adult activities."},{text:"Sexual Behavior",value:"Your survey includes content about sexual behavior."},{text:"Drugs",value:"Your survey includes content about drugs."},{text:"Guns",value:"Your survey includes content about guns."},{text:"Spelling and Grammar",value:"Your survey contains a spelling or grammatical error. Please correct it by editing the answer option '{}' into '{}'."},{text:"Wrong Language",value:"Your survey has answer options in a different language than the question."},{text:"Garbage Text",value:"Questions and answers should be grammatically clear, contextually relevant and directly associate with your survey content. Please edit the answer option '{}' to make it compliant."},{text:"Irrelevant",value:"The question doesn't seem to match with the answer options. Please edit or change the answer option/s '{}'."},{text:"None of the Above Answer",value:'Your survey already includes a "None of the Above" option by default.'},{text:"Financial Status",value:"Your survey includes content about financial status."},{text:"Get Rich",value:"Your survey includes content about getting rich."},{text:"Loans",value:"Your survey includes content about loans or lending services."},{text:"Hospitals",value:"Your survey includes content about hospitals or health care facilities."},{text:"Weight Loss Pills",value:"Your survey includes content about weight loss pills."},{text:"OTC Drugs",value:"Your survey includes content about OTC drugs"},{text:"Non-OTC Drugs",value:"Your survey includes content about non-OTC drugs."},{text:"Health Conditions",value:"Your survey includes content about health conditions."},{text:"Cosmetic Procedures",value:"Your survey includes content about cosmetic procedures."},{text:"Sexual Health",value:"Your survey includes content about sexual health."},{text:"Disallowed Birth Control",value:"Your survey includes content about birth control products or methods."},{text:"Medical Treatments",value:"Your survey includes content about medical treatments."},{text:"Inappropriate Language",value:"Your survey contains inappropriate language."},{text:"Harassment",value:"Your survey includes content about harassment."},{text:"Political Issues",value:"Your survey includes content about political issues."},{text:"Political Candidates",value:"Your survey includes content about political candidates."},{text:"Political Affiliation",value:"Your survey includes content about political affiliation."},{text:"Age",value:"Your survey includes content about age."},{text:"Gender",value:"Your survey includes content about gender"},{text:"Sexual Orientation",value:"Your survey includes content about sexual orientation."},{text:"Race Ethnicity",value:"Your survey includes content about race or ethnicity."},{text:"Religion",value:"Your survey includes content about religion."},{text:"Immigration",value:"Your survey includes content about immigration or immigrants."},{text:"Death",value:"Your survey includes content about death."},{text:"Past Criminal Record",value:"Your survey includes content about criminal record."},{text:"PII",value:"Your survey includes content about personally identifiable information."},{text:"Alcohol",value:"Your survey includes content about alcohol."},{text:"Gambling",value:"Your survey includes content about gambling."},{text:"Push Polling",value:"Your survey includes content about push polling or promotion."},{text:"Trade Union",value:"Your survey includes content about trade union."},{text:"Other Forbidden",value:"Your survey includes content about _____."},{text:"(any other reason that is not captured by other policies)"}]};
+
+
+  let createOptions = (data) => {
+    return data.map(o => {
+      return `<option value="${o.value}">${o.text}</option>`;
+    });
+  };
+
+  let elems = document.querySelector('select#labelsSelect'),
+      screenshotTextarea = document.querySelector('#screenshotTextarea'),
+      gtgLabelsGroup = document.querySelector('#gtgLabelsGroup'),
+      ngtgLabelsGroup = document.querySelector('#ngtgLabelsGroup');
+
+  gtgLabelsGroup.innerHTML = createOptions(data.compliantOptions);
+  ngtgLabelsGroup.innerHTML = createOptions(data.noncompliantOptions);
+
+  let instance = M.FormSelect.init(elems, {});
+
+
+  instance.el.addEventListener('change', () => {
+    screenshotTextarea.value = ` ${instance.getSelectedValues().join(",").replaceAll(",", " ")}`
+  });
+}
+
+
+// added functions
+function addResult(listElement, resultArray){
+    // Reset result list every input trigger
+    listElement.innerHTML = ``;
+    
+    // For each match add new li result
+    resultArray.forEach((result) => {
+        let searchResultItem = window.document.createElement('li');
+        searchResultItem.classList.add('searchResultItem');
+        searchResultItem.addEventListener('mousedown', autoCompleteInput);
+        searchResultItem.innerHTML = `${result.name}`;
+        searchResultItem.setAttribute("data-langcode", result.langCode);
+        listElement.appendChild(searchResultItem);
+
+    });
+}
+
+function languageListener(e){
+    // filter from countries
+    // return result to searchWrapper
+    attachSearch(`#${e.target.id}`);
+
+    let searchKeyword = e.target.value,
+        languageInput = e.target,
+        gridLanguage = languageInput.parentElement,
+        searchWrapper = document.querySelector(`#${gridLanguage.id} > .inputWrapper`),
+        resultList = searchWrapper.querySelector('.searchResultsList'),
+        result = !searchKeyword ? [] : data.languageSelectOptions
+            .filter(category => category
+            .name
+            .toLowerCase()
+            .includes(searchKeyword));
+    
+    
+    addResult(resultList, result);
+
+    
+}
+
+function countryListener(e){
+    // filter from countries
+    // return result to searchWrapper
+    attachSearch(`#${e.target.id}`);
+
+    let searchKeyword = e.target.value,
+        countryInput = e.target,
+        gridCountry = countryInput.parentElement,
+        searchWrapper = document.querySelector(`#${gridCountry.id} > .inputWrapper`),
+        resultList = searchWrapper.querySelector('.searchResultsList'),
+        result = !searchKeyword ? [] : data.countrySelectOptions
+            .filter(category => category
+            .name
+            .toLowerCase()
+            .includes(searchKeyword));
+    
+    
+    
+    addResult(resultList, result);
+}
+
+function attachSearch(parentID){
+    
+    let inputElement = document.querySelector(parentID),
+        searchWrapperDiv = window.document.createElement('div');
+
+    searchWrapperDiv.classList.add("inputWrapper");
+    searchWrapperDiv.innerHTML = `
+        <ul class="searchResultsList"></ul>
+    `;
+    inputElement.innerHTML = "";
+    inputElement.parentElement.appendChild(searchWrapperDiv);
+}
+
+
+function autoCompleteInput (e){
+    
+    let inputElement = e.target
+                    .parentElement
+                    .parentElement
+                    .parentElement
+    .querySelector('.autocomplete');
+    inputElement.value = e.target.textContent
+    inputElement.setAttribute("data-langcode", e.target.dataset.langcode);
+}
+
+
+function addSearch(parent){
+      let parentElement = document.querySelector(`#${parent}`),
+          chipsElement = document.querySelector('#violations-chip > input'),
+          searchWrapperDiv = window.document.createElement('div');
+
+      chipsElement.setAttribute("placeholder", "+Review-");
+      chipsElement.addEventListener('input', getResults);
+      searchWrapperDiv.setAttribute("id", "searchWrapper");
+      searchWrapperDiv.innerHTML = `
+          <ul id="searchResultsList"></ul>
+      `;
+      parentElement.appendChild(searchWrapperDiv);
+}
+// addSearch("violations-chip");
+
+
+function getResults(e){
+    let searchIndex = e.target.value,
+        selectedQueue = getSelectedQueue(),
+        // Filter category using searchIndex
+        searchFilter = selectedQueue.filter(category => category.name.toLowerCase().includes(searchIndex)),
+        // searchFilter = selectedQueue.filter(category => category.name .includes(searchIndex)),
+        searchResultsList = document.querySelector("#searchResultsList");
+
+
+    console.log(searchIndex)
+    console.log(selectedQueue)
+
+        
+
+    // Reset result list every input trigger
+    searchResultsList.innerHTML = ``;
+    
+    // For each match add new li result
+    searchFilter.forEach((result) => {
+        let searchResultItem = window.document.createElement('li');
+        searchResultItem.classList.add('searchCategoryItem');
+
+        searchResultItem.innerHTML = `${result.name}`;
+        searchResultsList.appendChild(searchResultItem);
+        
+    });
+
+    // change this
+    let showedItems = document.querySelectorAll('.searchCategoryItem') || [];
+
+
+    searchResultListener(searchFilter, showedItems);
+
+}
+
+function getSelectedQueue(){
+  const queueSelect = document.querySelector('#queueSelect');
+
+
+  let selected = queueSelect.options[queueSelect.selectedIndex].value,
+      categoryData = data.SRCategories;
+
+  if (selected == "Survey Review") {
+      categoryData = data.SRCategories;
+  } else if(selected == "Support") {
+      categoryData = data.supportCategories;
+  } else if(selected == "Publisher") {
+      categoryData = data.pubCategories;
+  } else if(selected == "Publisher-New") {
+      categoryData = data.pubCategories;
+  } else if(selected == "Publisher-Support") {
+      categoryData = data.pubCategories;
+  } else if(selected == "Partnership"){
+      categoryData = data.partnershipCategories;
+  } else if(selected == "NonTransaction"){
+      categoryData = data.nonTransactionCategories;
+  } else {
+      console.log('Invalid queue: ' + selected);
+  }
+  return categoryData;
+}
+
+function searchResultListener(filteredArray, resultArray){
+    if (filteredArray.length != 0){
+
+        Array.from(resultArray).forEach((item) => {
+            // console.log(item);
+            item.addEventListener('mousedown', (e) => {
+                dataChips.push({tag: e.target.textContent})
+                $('#violations-chip').material_chip({
+                    data: dataChips
+                });
+                addSearch("violations-chip");
+            });
+        });
+    }
+}
+
+
+function loadHome(e){
+  select_tab(e.target.id);
+  loadView({func: "loadHomeView"});
+
+  google.script.run.withSuccessHandler(data => {
+    setStatsData(data);
+    // document.querySelector('#loading').classList.add('hide');
+  }).getStatsData();
+}
+
+function loadFAView(e){
+  // console.log(e.target.id);
+  // select_tab(e.target.id);
+  select_tab("FAViewBtn");
+
+  let assignBtn = document.querySelector('#assignBtn') || "",
+      unassignBtn = document.querySelector('#unassignBtn') || "",
+      compliantBtn = document.querySelector('#compliantBtn') || "",
+      noncompliantBtn = document.querySelector('#noncompliantBtn') || "",
+      deletedBtn = document.querySelector('#close-btn') || "",
+      decisionBtns = document.querySelectorAll('.decisionBtn') || [],
+      refreshIntervalID = "";
+      
+  // window.addEventListener('click', (e) => console.log(e.target))
+  assignBtn ? assignBtn.addEventListener('click', doAssignCase) : "";
+  unassignBtn ? unassignBtn.addEventListener('click', doUnassignCase) : "";
+  needsInfoBtn ? needsInfoBtn.addEventListener('click', doNeedsInfo) : "";
+  compliantBtn ? compliantBtn.addEventListener('click', doSurveyDecision) : "";
+  noncompliantBtn ? noncompliantBtn.addEventListener('click', doSurveyDecision) : "";
+  deletedBtn ? deletedBtn.addEventListener('click', doSurveyDecision) : "";
+  decisionBtns ? decisionBtns.forEach(b => {
+    b.id != "finishBtn" ? 
+    b.addEventListener('click', toggleFADecisionBtns) : 
+    b.addEventListener('click', preFinish);
+  }) : "";
+
+  var elem = document.querySelector('.collapsible.expandable.fa-collapsible');
+  var instance = M.Collapsible.init(elem, {
+    accordion: false
+  });
+
+  console.log({elem});
+  console.log({instance});
+  if  (!localStorage.assigned){
+    // localStorage.setItem("assigned",JSON.stringify({ 
+    //     "caseRef": caseRef,
+    //     "surveyURL": surveyTextInput.dataset.url,
+    //     "startTime": startTime
+    //   }));
+    console.log("no assigned case!")
+  } else {
+      localStorage.removeItem("assigned");
+      console.log('ls.assigned removed!');
+  }
+
+  document.querySelector('#loading').classList.add('hide');
+  caseListLoader.classList.toggle("hide");
+
+  toggleSidenav();
+}
+
+<!-- ////////////////////////// -->
+
+function setUserData(data){
+  // Set Data
+  userData = data;
+
+  let profilePicture = document.querySelector('#profilePicture'),
+      profileLDAP = document.querySelector('#profileLDAP');
+
+  profileLDAP.textContent = userData.ldap;
+  profilePicture.src = userData.profileURL;
+
+  roleBasedToggle(userData.ldap);
+}
+
+function roleBasedToggle(ldap){
+  // loadView({func: "loadFAView"});
+  // select_tab("FAViewBtn");
+
+  loadFAView();  
+  toggleFACollapsible();
+}
+
+function getFormsData(){
+  let data,
+      reviewCategoriesInput = document.querySelector('#reviewCategoriesChips'),
+      reviewCategoriesChips = M.Chips.getInstance(reviewCategoriesInput),
+      categoriesArray = reviewCategoriesChips.chipsData.map(e => e.tag),
+      screenshotTextarea = document.querySelector('#screenshotTextarea'),
+      labelsSelect = document.querySelector('#labelsSelect'),
+      labelsSelectInstance = M.FormSelect.getInstance(labelsSelect),
+      languageInput = document.querySelector('#languageInput'),
+      countryInput = document.querySelector('#countryInput'),
+      surveyTypeSelect = document.querySelector('#surveyTypeSelect'),
+      surveyTypeSelectInstance = M.FormSelect.getInstance(surveyTypeSelect)
+      surveyTypeSelectValue = surveyTypeSelectInstance.el.options[surveyTypeSelectInstance.el.selectedIndex].value,
+
+      rmtoCheckbox = document.querySelector('#rmto'),
+      rmtoValue = rmtoCheckbox.checked ? 'yes' : 'no',
+
+      queueTypeSelect = document.querySelector('#queueSelect'),
+      queueTypeSelectInstance = M.FormSelect.getInstance(queueTypeSelect),
+      queueTypeSelectValue = queueTypeSelectInstance.el.options[queueTypeSelectInstance.el.selectedIndex].value,
+
+      numberOfQuestionsSelect = document.querySelector('#numberOfQuestions'),
+      numberOfQuestionsSelectInstance = M.FormSelect.getInstance(numberOfQuestionsSelect),
+      numberOfQuestionsSelectValue = numberOfQuestionsSelectInstance.el.options[numberOfQuestionsSelectInstance.el.selectedIndex].value,
+      timesReviewedSelect = document.querySelector('#timesReviewed'),
+      timesReviewedSelectInstance = M.FormSelect.getInstance(timesReviewedSelect),
+      timesReviewedSelectValue = timesReviewedSelectInstance.el.options[timesReviewedSelectInstance.el.selectedIndex].value,
+      customerTypeSelect = document.querySelector('#customerType'),
+      customerTypeSelectInstance = M.FormSelect.getInstance(customerTypeSelect),
+      customerTypeSelectValue = customerTypeSelectInstance.el.options[customerTypeSelectInstance.el.selectedIndex].value,
+
+      assignedLocalStorage = JSON.parse(localStorage.getItem("assigned")),
+      surveyDecision = assignedLocalStorage["surveyDecision"],
+      surveyURL = assignedLocalStorage["surveyURL"],
+      caseRef = assignedLocalStorage["caseRef"],
+      startTime = assignedLocalStorage["startTime"],
+      endTime = getFormattedDate(),
+      ahtDate = Math.abs(new Date(endTime) - new Date(startTime)),
+      min = Math.floor((ahtDate/1000)/60),
+      sec = Math.floor((ahtDate/1000)%60),
+      aht = `00:${min}:${sec}`;
+
+      console.log(getFormattedDate() + " " + new Date(startTime))
+      console.log();
+
+  let labelsValue = Array.from(labelsSelect.selectedOptions).length != 0 
+  ? `Labels: ${Array.from(labelsSelect.selectedOptions).map(e => e.textContent).join(",")},` 
+  : "",
+  surveyNote = labelsValue + screenshotTextarea.value;
+
+  let tool = caseRef.includes("-") ? "Cases 2.0" : "EWOQ";
+  let numberOfInteractions = caseRef.split(",").length;
+  
+  let JSONTest = {
+    queueType: queueTypeSelectValue,
+    surveyDecision: surveyDecision,
+    caseID: caseRef,
+    categories: categoriesArray,
+    comments: surveyNote,
+    language: languageInput.dataset.langcode,
+    country: countryInput.value,
+    numberOfQuestions: numberOfQuestionsSelectValue,
+    timesReviewed: timesReviewedSelectValue,
+    customerType: customerTypeSelectValue,
+    surveyType: surveyTypeSelectValue,
+    startTime: startTime,
+    endTime: endTime,
+    aht: aht,
+    reviewStatus: "reviewed",
+    tool: tool,
+    numberOfInteractions: numberOfInteractions
+  };
+
+  console.log({JSONTest});
+
+  return JSON.stringify(JSONTest);
+}
+
+function preFinish(){
+  console.log("ey finish");
+  let formsData = getFormsData();
+
+  console.log(formsData)
+
+  Swal.fire(
+  {
+    html: `
+      <div style="">
+          <h4 style="color:rgba(33,33,33,0.55); font-size: 1.2rem;">Case Summary</h4>
+      </div>
+        <ul class="collection" id="case-list">
+          <li class="collection-item"><label class="active">Categories:</label> <span id="summaryCategories" class="case-summary"></span></li>
+          <li class="collection-item"><label class="active">Language:</label> <span id="summaryLanguage" class="case-summary"></span></li>
+          <li class="collection-item"><label class="active">Country:</label> <span id="summaryCountry" class="case-summary"></span></li>
+          <li class="collection-item"><label class="active">Decision:</label> <span id="summaryDecision" class="case-summary"></span></li>
+          <li class="collection-item"><label class="active">Survey Type:</label> <span id="summarySurveyType" class="case-summary"></span></li>          
+        </ul>
+      <small style="
+      color: rgba(51,51,51,0.5);
+      font-size: 0.60rem;
+      ">
+          By clicking 'Submit' you acknowledge that you fully reviewed this case and you agree that any errors you may incur falls on your responsibility.
+      </small>
+    `,
+    customClass:{
+        confirmButton: 'btn blue swal-btn btn-summary',
+        cancelButton: 'btn grey swal-btn btn-summary'
+    },
+    buttonsStyling: false,
+    showCancelButton: true,
+    confirmButtonText: 'Submit',
+    reverseButtons: true,
+
+    onOpen: () => {
+        let ls = JSON.parse(localStorage.assigned),
+          languageSelect = document.querySelector('#languageSelect'),
+          // summaryLabels = document.querySelector('#summaryLabels'),
+          summaryCategories = document.querySelector('#summaryCategories'),
+          summaryLanguage = document.querySelector('#summaryLanguage'),
+          summaryDecision = document.querySelector('#summaryDecision'),
+          summarySurveyType = document.querySelector('#summarySurveyType'),
+          summaryCountry = document.querySelector('#summaryCountry'),
+          // summaryRMTO = document.querySelector('#summaryRMTO'),
+          caseData = getFormsData();
+          parsedCaseData = JSON.parse(caseData);
+
+        // let labelsValue = Array.from(labelsSelect.selectedOptions).length != 0 
+        //     ? `${Array.from(labelsSelect.selectedOptions).map(e => e.textContent).join(",")}` 
+        //     : "";
+        // summaryLabels.textContent = labelsValue;
+
+
+        summarySurveyType.textContent = parsedCaseData.surveyType;
+        summaryCategories.textContent = Array.isArray(parsedCaseData.categories) ? parsedCaseData.categories.join(",") : parsedCaseData.categories;
+        summaryLanguage.textContent = parsedCaseData.language;
+        summaryDecision.textContent = parsedCaseData.surveyDecision;
+        summaryCountry.textContent = parsedCaseData.country;
+        // summaryRMTO.textContent = parsedCaseData.rmto;
+    },
+  }
+  ).then((result) => { 
+      if (result.value) {
+      
+          //show loading
+          document.querySelector('#loading').classList.remove('hide');        
+
+          // USUAL APPROACH
+          google.script.run.withSuccessHandler(data => {
+            console.log(data);
+            doFinish();
+          }).doInsert(formsData);
+      }
+  });
+}
+
+function doFinish(){
+  toggleFADecisionBtns();
+  toggleFACollapsible();
+  doResetForms();
+  
+  document.querySelector('#loading').classList.add('hide');
+  Toast.fire({
+    icon: 'success',
+    title: `This case has been submitted...`
+  });
+}
+
+function setStatsData(data){
+  if (data){
+    let d = JSON.parse(data);
+      scores = d.scores.filter(e => e !== "" && e !== null && e !== undefined),
+      recentCasesTable = document.querySelector("#recentCasesTable") || "",
+      finishedCasesTotal = document.querySelector("#finishedCasesTotal") || "",
+      dailyRequiredCount = document.querySelector("#dailyRequiredCount") || "",
+      errorRatePercentage = document.querySelector("#errorRatePercentage") || "",
+      lastCaseTaken = document.querySelector("#lastCaseTaken") || "",
+      requiredCases = document.querySelector("#requiredCases") || "",
+      errorFrequency = document.querySelector("#errorFrequency") || "";
+
+    let sumActualScore = scores.reduce((a, b) => a + b, 0),
+        sumTargetScore = scores.length * 100,
+        errorRate = ((sumTargetScore - sumActualScore) / scores.length).toFixed(2),
+        errorCount = scores.filter(e => e != 100).length,
+        lastCaseDate = new Date(d.finished.reverse()[0][8]),
+        tbody = recentCasesTable.querySelector('tbody');
+
+    finishedCasesTotal.textContent = Object.keys(d.finished).length;
+    dailyRequiredCount.textContent = d.dailyRequired.length;
+    errorRatePercentage.textContent = `${errorRate}%`;  
+    errorFrequency.textContent = errorCount && scores.length ? `${errorCount} errors out of ${scores.length} audited cases` : "";
+    lastCaseTaken.textContent = `Last case date taken: ${lastCaseDate.toLocaleDateString()}`;
+
+    loadRecentTable(d.finished);
+
+  }
+
+}
+
+function loadRecentTable(data){
+  const recentCasesTable = document.querySelector("#recentCasesTable") || "",
+        tbody = recentCasesTable.querySelector('tbody');
+  data.forEach(trD => {
+
+    let newTR = document.createElement("tr");
+    let newArray = [
+      trD[0],
+      trD[2],
+      trD[4],
+      trD[5],
+      trD[7],
+      new Date(trD[8]).toLocaleString(),
+      new Date(trD[9]).toLocaleString(),
+      trD[10],
+      // new Date(trD[11]).toLocaleTimeString(),
+      getFormattedAHT(trD[11]),
+      trD[12],
+      trD[13],
+      trD[14],
+      trD[15]
+    ];
+
+    newArray.forEach(tdD => {
+      let newTD = document.createElement("td");
+      // newTD.classList.add("");
+      newTD.innerHTML = `${tdD}`;
+      newTR.appendChild(newTD);
+    })
+
+    newTR.children[1].style.cssText = `color:#039be5;text-decoration:none;-webkit-tap-highlight-color:#0000;cursor:pointer;`;
+    newTR.children[1].addEventListener('click', () => window.open(trD[3]));
+    tbody.appendChild(newTR);
+  });
+}
+
+
+function loadCaseListTable(tableData){
+  let data = JSON.parse(tableData),
+      caseList = $('#caseList'),
+      surveyText = document.querySelector('#surveyText'),
+      assignBtn = document.querySelector('#assignBtn'),
+      unassignBtn = document.querySelector('#unassignBtn')
+      caseListLoader = document.querySelector('#caseListLoader');    
+  caseList = $('#caseList').DataTable( {
+      data: data,
+      sDom: 'lrtip',
+      bPaginate: true,
+      "bLengthChange": false, 
+      "pageLength": 10,    
+      autoWidth: true,
+      responsive: true,
+      "order": [[ 2, "desc" ]],
+      columns: [                
+          { title: "LDAP" },
+          { title: "Reference ID" },
+          { title: "Case ID", "render": function(data, type, row){
+              return String(data).split(",").join("<br/>");
+            }
+          }
+        ],
+      "initComplete": () => {
+        // 12345
+        caseListLoader.classList.toggle("hide");
+        $('#caseList tbody').off().on('click', 'tr', function () {
+            if (assignBtn.classList.contains("disabled")){
+              assignBtn.classList.remove('disabled');
+            }
+
+            var data = caseList.row( this ).data(),
+                caseRef = data[1],
+                caseURL = data[2];
+
+            surveyText.value = caseRef;
+            surveyText.setAttribute("data-url", caseURL);
+            caseList.$('tr.data-table-selected').removeClass('data-table-selected');
+            $(this).addClass('data-table-selected'); 
+        });
+      },
+      'rowCallback': (row, data, index) => {}
+  });
+}
+
+function doRedirect(element){
+  // window.open(surveyText.dataset.url);
+  let surveyText = this.querySelector('#surveyText');
+  console.log(this);
+  console.log(element);
+  window.open(surveyText.dataset.url);
+}
+
+
+function toggleFACollapsible(){
+  const currentView = document.querySelector('.selectedRouter') || "",
+        currentViewID = currentView ? currentView.id : "";
+
+    // let FACollapsibleElements = document.querySelector(".collapsible.expandable.fa-collapsible"),
+    //     collapsibleCaseTable = M.Collapsible.getInstance(FACollapsibleElements),
+    //     liCaseTable = collapsibleCaseTable.el.children;
+
+
+    // init policy select
+    // mock case auto-populate CR
+    // based on selected review policy
+    // initLabelsSelect();
+
+    // Initialize Select elements
+    const selectElements = document.querySelectorAll('select'),
+        selectInstances = M.FormSelect.init(selectElements, {});
+        
+    // initialize case review actions elements    
+    let array = data.SRCategories.map(e => e.name);
+    let ob = array.reduce((o, key) => ({ ...o, [key]: ""}), {});
+    var elems = document.querySelectorAll('.chips');
+    var instances = M.Chips.init(elems, {
+          autocompleteOptions: {
+            data: ob,
+            limit: Infinity,
+            minLength: 1
+          },
+          placeholder: 'Review-SurveyStarted',
+          secondaryPlaceholder: '+Review~',
+    });
+}
+
+function renderCaseInfo(data){
+
+  console.log({data});
+
+  let infoCategories = document.querySelector('#infoCategories'),
+    infoSurveyDecision = document.querySelector('#infoSurveyDecision'),
+    infoLanguage = document.querySelector('#infoLanguage'),
+    infoStartTime = document.querySelector('#infoStartTime'),
+    infoEndTime = document.querySelector('#infoEndTime'),
+    infoAHT = document.querySelector('#infoAHT'),
+    infoComment = document.querySelector('#infoComment'),
+    infoSurveyURL = document.querySelector('#infoSurveyURL'),
+    infoQAScore = document.querySelector('#infoQAScore'),
+    infoQAComment = document.querySelector('#infoQAComment'),
+    infoVarianceScore = document.querySelector('#infoVarianceScore'),
+    infoVarianceComment = document.querySelector('#infoVarianceComment');
+
+  infoSurveyURL.firstElementChild.setAttribute('href', data[3]);
+  infoSurveyURL.firstElementChild.textContent = data[3];
+  infoCategories.textContent = data[10];
+  infoSurveyDecision.textContent = data[7];
+  infoLanguage.textContent = data[4];
+  infoStartTime.textContent = getFormattedDate(data[8]);
+  infoEndTime.textContent = getFormattedDate(data[9]);
+  infoAHT.textContent = getFormattedAHT(data[11]);
+  infoComment.textContent = data[6];
+
+  infoQAScore.textContent = data[13];
+  infoQAComment.textContent = data[14];
+  infoVarianceScore.textContent = data[15];
+  infoVarianceComment.textContent = data[16];
+}
+
+function doResetFAForms(){
+  let reviewCategoriesChips = document.querySelector('#reviewCategoriesChips') || "";
+   screenshotTextarea = document.querySelector('#screenshotTextarea') || "";
+   languageSelect = document.querySelector('#languageSelect') || "";
+   surveyTypeSelect = document.querySelector('#surveyTypeSelect') || "";
+
+   //refactor, detect QA/FA/Variance View
+   screenshotTextarea ? screenshotTextarea.value = "" : console.log("no");
+   languageSelect.selectedIndex = 0;
+   surveyTypeSelect.selectedIndex = 0;
+
+}
+
+
+function doResetForms(){
+  // Card 1 Forms
+  let surveyTextInput = document.querySelector('#surveyText'),
+    aht = document.querySelector('#aht'),
+    assignBtn = document.querySelector('#assignBtn'),
+    unassignBtn = document.querySelector('#unassignBtn'),
+    caseRef = surveyTextInput.value || "";
+    
+
+  aht.textContent = "00:00:00";
+
+  surveyTextInput.value = "";
+  surveyTextInput.removeAttribute('disabled');
+  surveyTextInput.classList.remove('assigned-mode');
+  surveyTextInput.focus();
+
+  localStorage.removeItem("assigned");
+  clearInterval(refreshIntervalID);
+
+  assignBtn.classList.add('disabled');
+  assignBtn.classList.toggle("hide");
+  unassignBtn.classList.toggle("hide");
+  needsInfoBtn.classList.toggle("hide");
+
+
+  // Reset usability
+  let decisionBtns = document.querySelectorAll('.decisionBtn');
+  decisionBtns.forEach((btn) => {
+    btn.classList.add('disabled');
+  });
+
+  //Disable Card 2 Form Inputs
+  // disableForms();
+
+  //Card 2 Forms
+  resetCard2Forms();
+}
+
+function resetCard2Forms(){
+  // Card 2 Forms
+  let queueSelect = document.querySelector('#queueSelect'),
+      reviewCategoriesChips = document.querySelector('#reviewCategoriesChips'),
+      countryInput = document.querySelector('#countryInput'),
+      numberOfQuestions = document.querySelector('#numberOfQuestions'),
+      timesReviewed = document.querySelector('#timesReviewed'),
+      customerType = document.querySelector('#customerType'),
+      screenshotTextarea = document.querySelector('#screenshotTextarea'),
+      languageInput = document.querySelector('#languageInput'),
+      surveyTypeSelect = document.querySelector('#surveyTypeSelect'),
+      rmtoCheckbox = document.querySelector('#rmto'),
+      validElements = Array.from(document.querySelectorAll('.valid')),
+      invalidElements = Array.from(document.querySelectorAll('.invalid'));
+
+  // Validation Borders
+  validElements.length != 0 ? validElements.forEach(input => input.classList.remove('valid')) : "";
+  invalidElements.length != 0 ? invalidElements.forEach(input => input.classList.remove('invalid')) : "";
+  
+  // Select Elements
+  queueSelect.selectedIndex = 5;
+  numberOfQuestions.selectedIndex = 0;
+  timesReviewed.selectedIndex = 0;
+  customerType.selectedIndex = 0;
+  surveyTypeSelect.selectedIndex = 0;
+  // Reset all select elements
+  var selectElements = document.querySelectorAll('select');
+  var selectInstances = M.FormSelect.init(selectElements, {});
+
+  // Text & Textarea
+  countryInput.value = "";
+  languageInput.value = "";
+  screenshotTextarea.value = "";
+
+  // Checkbox
+  rmtoCheckbox.checked = false;
+
+  // Chips
+  // todo chips
+  // reviewCategoriesChips
+  // $(".chips .chip").remove(),
+  // screenshotText.value = "";    
+}
+
+function enableForms(){
+  let queueSelect = document.querySelector('#queueSelect'),
+    reviewCategoriesChips = document.querySelector('#reviewCategoriesChips'),
+    countryInput = document.querySelector('#countryInput'),
+    numberOfQuestions = document.querySelector('#numberOfQuestions'),
+    timesReviewed = document.querySelector('#timesReviewed'),
+    customerType = document.querySelector('#customerType'),
+    screenshotTextarea = document.querySelector('#screenshotTextarea'),
+    languageInput = document.querySelector('#languageInput'),
+    surveyTypeSelect = document.querySelector('#surveyTypeSelect'),
+    rmtoCheckbox = document.querySelector('#rmto');
+
+
+
+  var elems = document.querySelectorAll('select');
+  var instances = M.FormSelect.init(elems, {});
+
+
+  queueSelect.removeAttribute("disabled"); 
+  reviewCategoriesChips.removeAttribute("disabled"); 
+  countryInput.removeAttribute("disabled"); 
+  numberOfQuestions.removeAttribute("disabled"); 
+  timesReviewed.removeAttribute("disabled"); 
+  customerType.removeAttribute("disabled"); 
+  screenshotTextarea.removeAttribute("disabled"); 
+  languageInput.removeAttribute("disabled"); 
+  surveyTypeSelect.removeAttribute("disabled"); 
+  rmtoCheckbox.removeAttribute("disabled"); 
+}
+
+function disableForms(){
+  let queueSelect = document.querySelector('#queueSelect'),
+    reviewCategoriesChips = document.querySelector('#reviewCategoriesChips'),
+    countryInput = document.querySelector('#countryInput'),
+    numberOfQuestions = document.querySelector('#numberOfQuestions'),
+    timesReviewed = document.querySelector('#timesReviewed'),
+    customerType = document.querySelector('#customerType'),
+    screenshotTextarea = document.querySelector('#screenshotTextarea'),
+    languageInput = document.querySelector('#languageInput'),
+    surveyTypeSelect = document.querySelector('#surveyTypeSelect'),
+    rmtoCheckbox = document.querySelector('#rmto'),
+    validElements = Array.from(document.querySelectorAll('.valid')),
+    invalidElements = Array.from(document.querySelectorAll('.invalid'));
+
+
+  queueSelect.setAttribute("disabled", ""); 
+  reviewCategoriesChips.setAttribute("disabled", "");
+  countryInput.setAttribute("disabled", "");
+  numberOfQuestions.setAttribute("disabled", "");
+  timesReviewed.setAttribute("disabled", "");
+  customerType.setAttribute("disabled", "");
+  screenshotTextarea.setAttribute("disabled", "");
+  languageInput.setAttribute("disabled", "");
+  surveyTypeSelect.setAttribute("disabled", "");
+  rmtoCheckbox.setAttribute("disabled", "");
+}
+
+function doUnassignCase(){
+    let surveyTextInput = document.querySelector('#surveyText'),
+        caseRef = surveyTextInput.value || "";
+
+    surveyTextInput.classList.toggle("assigned-mode");
+
+    // Hides Case Review Card
+    // document.querySelector('#card2').className = 'card scale-transition scale-out';
+
+    doResetForms();
+    document.querySelector('#assignBtn').classList.add('disabled');
+    resetDecisionBtns();
+    toggleFACollapsible();
+
+    // var elems = document.querySelectorAll('select');
+    // var instances = M.FormSelect.init(elems, {});
+
+    Toast.fire({
+      icon: 'success',
+      title: `${caseRef} has been unassigned..`
+    });
+}
+
+function resetDecisionBtns(){
+  const compliantBtn = document.querySelector('#compliantBtn');
+        noncompliantBtn = document.querySelector('#noncompliantBtn');
+        deletedBtn = document.querySelector('#close-btn');
+        backBtn = document.querySelector('#backBtn');
+        finishBtn = document.querySelector('#finishBtn');
+
+  compliantBtn.classList.remove('hide');
+  noncompliantBtn.classList.remove('hide');
+  deletedBtn.classList.remove('hide');
+
+  backBtn.classList.add('hide');
+  finishBtn.classList.add('hide');
+
+  // compliantBtn.classList.remove('hide') : "";
+  // noncompliantBtn.classList.remove('hide') : "";
+  // compliantBtn.classList.add('hide');
+  // noncompliantBtn.classList.add('hide');
+}
+
+function doNeedsInfo(){
+    let assigned = JSON.parse(localStorage.getItem('assigned')),
+        aht = Math.abs(new Date() - new Date(assigned["startTime"])),
+        needsInfoBtn = document.querySelector('#needsInfoBtn');
+    
+    needsInfoBtn.classList.add('disabled');
+    assigned["needsInfo"] = true;
+    assigned["endTime"] = getFormattedDate();
+    assigned["aht"] = aht;
+    localStorage.setItem("assigned", JSON.stringify(assigned));
+
+    // Stop AHT timer
+    clearInterval(assigned.refreshIntervalID);
+
+    // TODO needs info
+    let reviewCategoriesChips = document.querySelector('.chips#reviewCategoriesChips');
+    let reviewCategoriesChipsInstance = M.Chips.getInstance(reviewCategoriesChips);
+    let reviewCategoriesChipsData = reviewCategoriesChipsInstance.chipsData;
+
+    reviewCategoriesChipsInstance.addChip({
+      tag: 'Review-NeedsInfo',
+      image: '',
+    });
+
+    console.log(reviewCategoriesChipsInstance.chipsData)
+}
+
+function doAssignCase(){
+  let surveyTextInput = document.querySelector('#surveyText'),
+      assignBtn = document.querySelector('#assignBtn'),
+      unassignBtn = document.querySelector('#unassignBtn'),
+      startTime = getFormattedDate(),
+      caseRef = surveyTextInput.value || "";
+
+  toggleFACollapsible();
+
+  // document.querySelector('#card2').className = 'card scale-transition scale-in';
+
+  // toggle unassign button
+  assignBtn.classList.toggle("hide");
+  unassignBtn.classList.toggle("hide");
+  needsInfoBtn.classList.toggle("hide");
+  needsInfoBtn.classList.remove("disabled");
+  surveyTextInput.classList.toggle("assigned-mode");
+  surveyTextInput.setAttribute("disabled", "");
+
+  // AHT();
+  refreshIntervalID = setInterval(AHT, 1000),
+  nmin = 0,
+  nsec = 0,
+  nhour = 0;
+
+  if (!localStorage.assigned){
+    localStorage.setItem("assigned",JSON.stringify({ 
+        "caseRef": caseRef,
+        "surveyURL": surveyTextInput.dataset.url,
+        "startTime": startTime,
+        "refreshIntervalID": refreshIntervalID
+      }));
+  } else {
+      console.log('There is assigned survey.');
+  }
+
+  
+
+  // Reset Card 2 forms
+  resetCard2Forms();
+
+  // Reset visibility
+  resetDecisionBtns();
+
+  // Reset usability
+  let decisionBtns = document.querySelectorAll('.decisionBtn');
+  decisionBtns.forEach((btn) => {
+    btn.classList.remove('disabled');
+  });
+
+  // 12345
+  // assign_success();
+  Toast.fire({
+    icon: 'success',
+    title: `${caseRef} has been assigned..`
+  })
+
+}
+
+function toggleAssign(){
+    let surveyText = document.querySelector('#surveyText'),
+      assignBtn = document.querySelector('#assignBtn'),
+      unassignBtn = document.querySelector('#unassignBtn'),
+      redirectIcon =document.querySelector('.redirect-icon'),
+      startTime = getFormattedDate(),
+      caseRef = surveyText.value || "",
+      collapsibleElems = document.querySelectorAll('.collapsible.expandable'),
+      instance = M.Collapsible.getInstance(collapsibleElems[0]),
+      instance2 = M.Collapsible.getInstance(collapsibleElems[1]),
+      selectElements = document.querySelectorAll('select'),
+      selectInstances = M.FormSelect.init(selectElements, {});
+
+    // toggle unassign button
+    assignBtn.classList.toggle("hide");
+    unassignBtn.classList.toggle("hide");
+    needsInfoBtn.classList.toggle("hide");
+    redirectIcon.classList.toggle("hide");
+    redirectIcon.classList.toggle("assigned-mode");
+    surveyText.classList.toggle("assigned-mode");
+    surveyText.parentElement.addEventListener('click', () => {
+      window.open(surveyText.dataset.url);
+    })
+
+    instance.open(1);
+    instance.close(0);
+
+    instance2.open(1);
+    instance2.close(0);
+}
+
+function toggleSidenav(){
+  const sidenavElem = document.querySelector('.sidenav'),
+        instance = M.Sidenav.getInstance(sidenavElem),
+        sidenavToggleBtn = document.querySelector("#sidenav-toggle-btn"),
+        sidenavIcon = sidenavToggleBtn.querySelector(".material-icons"),
+        main = document.querySelector("main"),
+        header = document.querySelector("header");
+
+  console.log(instance);
+  let close = () => {
+      instance.close();
+      sidenavIcon.textContent = "view_quilt";
+      sidenavToggleBtn.style.background = "#C8E6C9";
+      main.style.paddingLeft = "0px";
+      header.style.paddingLeft = "0px";
+    },
+    open = () => {
+      instance.open();
+      sidenavIcon.textContent = "more_vert";
+      sidenavToggleBtn.style.background = "transparent";
+      main.style.paddingLeft = "300px";
+      header.style.paddingLeft = "300px";
+    };
+
+  return instance.isOpen ? close() : open();
+}
+
+
+
+
+
+//Utilities
+
+function select_tab(id) {
+    // remove selected class from all buttons
+    // item.classList.remove('selectedRouter')
+    document.querySelectorAll(".router").forEach(item => item.classList.remove('selectedRouter'));
+    // select clicked element (visually)
+    document.querySelectorAll("#" + id).forEach(item => item.classList.add('selectedRouter'));
+}
+
+function loadView(options){
+   let id = typeof options.id === "undefined" ? "app" : options.id;
+   let cb = typeof options.callback === "undefined" ? function(){} : options.callback;
+
+  //  add loader
+   document.querySelector('#loading').classList.remove('hide');
+
+   google.script.run.withSuccessHandler((html) => {
+       document.querySelector("#app-main").innerHTML = html;
+       typeof options.params === "undefined" ? cb() : cb(options.params);
+
+      //  remove loader
+       document.querySelector('#loading').classList.add('hide');
+   })[options.func]();
+}
+
+// function getFormattedDate(){
+//     let date = new Date(),
+//     formattedDate = (date.getMonth() + 1) + '/' + date.getDate() +  "/" + date.getFullYear();
+//     return formattedDate = formattedDate + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+// }
+
+function getFormattedDate(dateGiven){
+    let date = dateGiven == null || undefined  ? new Date(): new Date(dateGiven),
+    formattedDate = (date.getMonth() + 1) + '/' + date.getDate() +  "/" + date.getFullYear();
+    return formattedDate = formattedDate + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+}
+
+function getFormattedAHT(date){
+  let d = date !== "" && date != null ? new Date(date) : "",
+      aht = d !== "" && d != null ? `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}` : "";
+
+  return aht;
+}
+
+function AHT() {
+  let ahtText = document.querySelector('#aht'),
+      isPaused = false;
+
+  ahtText.innerText = nhour + ":" + nmin + ":" + nsec;
+
+  if(!isPaused){
+    nsec += 1;
+    if (nsec == 60) {
+        nsec = 0;
+        nmin += 1;
+    } else if (nmin == 60) {
+        nmin = 0;
+        nhour += 1;
+    }
+  }
+}
+</script>

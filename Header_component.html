@@ -1,0 +1,59 @@
+<header>
+  <!-- Dropdown Structure -->
+  <ul id="dropdown1" class="dropdown-content">
+      <li><a href="#!">one</a></li>
+      <li><a href="#!">two</a></li>
+      <li class="divider"></li>
+      <li><a href="#!">three</a></li>
+  </ul>
+  <nav class="z-depth-0">
+      <div class="nav-wrapper">
+          <a data-target="" class="sidenav-trigger show-on-large sidenav-close" id="sidenav-toggle-btn">
+              <i class="material-icons">more_vert</i>
+          </a>
+          <a class="brand-logo">CT Web</a>
+          <ul class="right hide-on-med-and-down">
+              <li><a><i class="material-icons">search</i></a></li>
+              <li><a><i class="material-icons">dashboard</i></a></li>
+              <li><a><i class="material-icons">notifications</i></a></li>
+              <li><a class="dropdown-trigger" data-target="dropdown1"><i class="material-icons">person</i></a></li>
+          </ul>
+      </div>
+  </nav>
+
+  <ul id="slide-out" class="sidenav" style="background: #191919">
+      <li class="no-padding" style="margin: 2rem 0rem;">
+          <ul class="collapsible collapsible-accordion">
+              <li>
+              <a class="collapsible-header" style="display: flex; align-items: center; justify-content: space-between; padding: 32px;">
+                  <img 
+                  id="profilePicture" 
+                  class="" 
+                  style="border-radius: 50px; width: 34px; height: 34px;" 
+                  src="https://avatars2.githubusercontent.com/u/18651126?s=460&u=ea2834cff018a104af898c4b2a7ed376fce0e3da&v=4">
+
+                  <span id="profileLDAP">John Doe</span>
+                  <i class="material-icons right">arrow_drop_down</i>
+              </a>
+              <div class="collapsible-body grey darken-4">
+                  <ul>
+                      <li><a href="#!">First</a></li>
+                      <li><a href="#!">Second</a></li>
+                      <li><a href="#!">Third</a></li>
+                      <li><a href="#!">Fourth</a></li>
+                  </ul>
+              </div>
+              </li>
+          </ul>
+      </li>
+      <li style="margin: 30px 0px;"><div class="divider" style="background: #555;"></div></li>
+      <!-- <li><a class="waves-effect router selectedRouter" id="homeBtn"><i class="material-icons">dashboard</i>Dashboard</a></li> -->
+      <li><a class="waves-effect router" id="FAViewBtn"><i class="material-icons">arrow_downward</i>Take Cases</a></li>
+      <!-- <li><a class="waves-effect router" id="QADashboardViewBtn"><i class="material-icons">dashboard</i>QA Dashboard</a></li> -->
+      <!-- <li><a class="waves-effect router" id="QAViewBtn"><i class="material-icons">assessment</i>Audit Cases</a></li> -->
+      <!-- <li><a class="waves-effect router" id="varianceViewBtn"><i class="material-icons">supervisor_account</i>Variance</a></li> -->
+      <!-- <li><a class="waves-effect router" id="VarianceDashboardViewBtn"><i class="material-icons">dashboard</i>Variance Dashboard</a></li> -->
+      <!-- <li><a class="waves-effect router" id="RCAViewBtn"><i class="material-icons">find_in_page</i>RCA</a></li> -->
+      <!-- <li><a class="waves-effect router" id="rosterViewBtn"><i class="material-icons">group_work</i>Manage Roster</a></li> -->
+  </ul>
+  </header>

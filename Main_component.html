@@ -1,0 +1,227 @@
+<main id="app-main">
+<div class="container-fluid">
+	<div class="row container">
+		<div class="col s4">
+			<div class="card">
+				<div class="card-content">
+					<!-- <span class="card-title">Case Details</span> -->
+
+					<ul id="surveyListCollection" class="collection with-header">
+						<li class="collection-header" style="text-align: center;">
+							<h3><b><span id="aht" style="font-weight: 400;">00:00:00</span></b></h3>
+						</li>
+						<li class="collection-item">
+							<div class="valign-wrapper" style="margin-bottom: 0px;">
+								<div class="input-field left center-align" style="min-width: 100%;">
+									<label class="active center-align" for="surveyText" style="text-align: center;font-size: 0.8rem; position: static;">CASE/EWOQ ID</label>
+									<input type="text" name="" id="surveyText" autocomplete="off" placeholder="Case ID: 2-43060000282111" class="center-align">
+                    </div>
+									<!-- <i class="material-icons redirect-icon hide" style="margin-left: -35px;margin-top: 15px;color: #333;z-index: 1059;vertical-align: middle;">open_in_new</i> -->
+								</div>
+						</li>
+					</ul>
+				</div>
+				<div class="card-action">
+					<a id="assignBtn" class="waves-effect waves-light btn-large blue darken-2 disabled"
+						style="width: 100%; display: flex; justify-content: center; margin: 5px 0px;"><i class="material-icons left">assignment</i>ASSIGN</a>
+					<a id="unassignBtn" class="waves-effect waves-light btn-large blue darken-4 hide"
+						style="width: 100%; display: flex; justify-content: center; margin: 5px 0px;"><i class="material-icons left">assignment_return</i>UNASSIGN</a>
+          <a id="needsInfoBtn" class="waves-effect waves-light btn-large teal darken-2 hide"
+						style="width: 100%; display: flex; justify-content: center; margin: 5px 0px;"><i class="material-icons left">pause</i>NEEDS INFO</a>
+				</div>
+			</div>
+		</div>
+		<div class="col s8">
+			<div class="progress" id="caseListLoader">
+				<div class="indeterminate green darken-1"></div>
+			</div>
+			<!-- <ul class="collapsible expandable fa-collapsible">
+				<li class="active">
+					<div class="collapsible-header hoverable"><i class="material-icons">view_list</i>Case List Table
+					</div>
+					<div class="collapsible-body">
+						<table id="caseList" class="mdl-data-table striped centered highlight" style="width:100%">
+						</table>
+					</div>
+				</li>
+				<li class="active">
+					<div class="collapsible-header hoverable"><i class="material-icons">note_add</i>Review Actions</div>
+					<div class="collapsible-body"> -->
+						<!-- Case Review Actions -->
+  <!-- <div class="row">
+    <div class="col s12"> -->
+
+								<div class="card scale-transition scale-in" id="card2">
+									<div class="card-content">
+										<div class="row">
+
+                      <div class="input-field col s12">
+                        <select id="queueSelect">
+                          <option value="" disabled>Choose your option</option>
+                          <option value="Support">SUPPORT</option>
+                          <option value="Publisher">PUBLISHER</option>
+                          <option value="Publisher-New">PUBLISHER-NEW</option>
+                          <option value="Publisher-Support">PUBLISHER-SUPPORT</option>
+                          <option value="Survey Review" selected="selected">SURVEY REVIEW</option>
+                          <option value="Partnership">PARTNERSHIP</option>
+                          <option value="NonTransaction">NON-TRANSACTION</option>
+                        </select>
+                        <label>Queue Type</label>
+                      </div>
+
+											<div class="input-field col s12 toggleInputs">
+												<div class="chips chips-autocomplete validate" id="reviewCategoriesChips"></div>
+												<label class="active">Review Categories</label>
+											</div>
+<!-- 
+                      <div id="queueChange-elements" class="input-field col s10">
+                        <label class="active" for="violations-chip">Categories</label>
+                        <input placeholder="Review-SurveyStarted" id="searchInput" type="text" class="validate hide"  autocomplete="new-password" style="margin-bottom: 5px;">
+                        
+                        <div id="violations-chip" class="chips chips-initial chips-autocomplete">
+                            
+                        </div>
+                      </div> -->
+
+                      <div class="input-field col s2 hidden" style="display: flex;justify-content: center;align-items: flex-end;min-height: 60px;">
+                        <p>
+                          <label>
+                            <input id="rmto" type="checkbox" />
+                            <span>RMTO</span>
+                          </label>
+                        </p>
+											</div>
+
+											<div class="input-field col s12 toggleInputs hide">
+												<select id="labelsSelect" multiple>
+                            <optgroup id="gtgLabelsGroup" label="">
+                              <option value="1">Option 1</option>
+                              <option value="2">Option 2</option>
+                            </optgroup>
+                            <optgroup id="ngtgLabelsGroup" label="">
+                              <option value="3">Option 3</option>
+                              <option value="4">Option 4</option>
+                            </optgroup>
+                          </select>
+												<label class="">Policy Label</label>
+											</div>
+
+
+                      <div class="input-field col s6" id="grid-country">
+                          <label class="active">Country</label>
+                          <input type="text" id="countryInput" class="autocomplete validate" autocomplete="off" placeholder="United States">
+                      </div>
+
+											<div class="input-field col s6 toggleInputs" id="grid-language">
+                        <label class="active">Language</label>
+                        <input type="text" id="languageInput" class="autocomplete validate" autocomplete="off" placeholder="English..." required></input>
+											</div>
+
+											<div class="input-field col s12 toggleInputs">
+												<select id="surveyTypeSelect">
+                            <option value="" disabled selected="selected">Network Type</option>
+                            <option value="BLS1">BLS1</option>
+                            <option value="BLS2">BLS2</option>
+                            <option class="toggleable" value="Hats">Hats</option>
+                            <option class="toggleable" value="API-Internal">API-Internal</option>
+                            <option class="toggleable" value="API-External">API-External</option>
+                            <option class="toggleable" value="External">External</option>
+                            <option class="toggleable" value="Crust">Crust</option>
+                            <option class="toggleable" value="Googler">Googler</option>
+                            <option class="toggleable" value="Websat">Websat</option>
+                            <option class="toggleable" value="Surveys360">Surveys360</option>
+                          </select>
+												<label> Survey Type Select</label>
+											</div>
+
+                      <div class="input-field col s6">
+                        <select id="numberOfQuestions">
+                            <option value="" selected>Questions</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                            <option value="4">Four</option>
+                            <option value="5">Five</option>
+                            <option value="6">Six</option>
+                            <option value="7">Seven</option>
+                            <option value="8">Eight</option>
+                            <option value="9">Nine</option>
+                            <option value="10">Ten</option>
+                        </select>
+                        <label># of Questions</label>
+                      </div>
+
+                      <div class="input-field col s6">
+                        <select id="timesReviewed">
+                          <option value="" selected>Reviews</option>
+                          <option value="0">0 Time</option>
+                          <option value="1">1 Time</option>
+                          <option value="2">2 Times</option>
+                          <option value="3">3 Times</option>
+                          <option value="4">4 Times</option>
+                          <option value="5">5 Times</option>
+                          <option value="6">6 Times</option>
+                          <option value="7">7 Times</option>
+                          <option value="8">8 Times</option>
+                          <option value="9">9 Times</option>
+                          <option value="10">10 Times</option>
+                          <option value="11">11 Times</option>
+                          <option value="12">12 Times</option>
+                          <option value="13">13 Times</option>
+                          <option value="14">14 Times</option>
+                          <option value="15">15 Times</option>
+                          <option value="16">16 Times</option>
+                          <option value="17">17 Times</option>
+                          <option value="18">18 Times</option>
+                          <option value="19">19 Times</option>
+                          <option value="20">20 Times</option>
+                        </select>
+                        <label># Times Reviewed</label>
+                      </div>
+
+                      <div class="input-field col s12">
+                        <select id="customerType">
+                            <option value="" disabled selected="selected">Choose your option</option>
+                            <option value="Surveys360">Surveys360</option>
+                            <option value="Googler">Googler</option>
+                            <option value="External">External</option>
+                        </select>
+                        <label>Customer Type</label>
+                      </div>
+
+											<div class="input-field col s12 toggleInputs">
+												<textarea value="" style="min-height: 70px;" placeholder="Input screenshot of survey or comments here" id="screenshotTextarea" type="text" class="materialize-textarea validate"></textarea>
+												<label for="screenshotTextarea" class="active">Screenshot or Comments</label>
+											</div>
+
+										</div>
+
+
+									</div>
+
+									<div class="card-action">
+										<a class="btn waves-light waves-effect btn-green decisionBtn disabled" id="compliantBtn"
+											data-decision="compliant"><i class="material-icons left">thumb_up</i>Start</a>
+										<a class="btn waves-light waves-effect btn-red decisionBtn disabled" id="noncompliantBtn"
+											data-decision="noncompliant"><i class="material-icons left">thumb_down</i>Needs
+											Edit</a>
+										<a class="btn waves-light waves-effect black decisionBtn disabled" id="close-btn"
+											data-decision="deleted"><i class="material-icons left">close</i>Deleted</a>                      
+										<a class="btn waves-light waves-effect blue-grey lighten-5 decisionBtn secondaryDecisionBtn disabled hide"
+											id="backBtn"
+											style="color: #212121;"><i class="material-icons left">arrow_back</i>Back</a>
+										<a class="btn waves-light waves-effect green darken-2 decisionBtn secondaryDecisionBtn disabled hide"
+											id="finishBtn"><i class="material-icons left">send</i>Finish</a>
+									</div>
+								</div>
+
+							<!-- </div>
+						</div>
+					</div>
+				</li>
+			</ul> -->
+
+		<!-- </div>
+	</div> -->
+</div>
+</main>
