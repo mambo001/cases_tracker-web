@@ -15,14 +15,20 @@ function doGet(e) {
       var htmlTemplate = HtmlService.createTemplateFromFile('index');
 
     var htmlOutput = htmlTemplate.evaluate()
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME).setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+      .setFaviconUrl("https://i.imgur.com/LKCM9pP.png")
+      .setTitle('Cases Tracker Web');
 
     // appendDataToHtmlOutput modifies the html and returns the same htmlOutput object
     return htmlOutput;
   }
   // else, use page parameter to pick an html file from the script
   return HtmlService.createTemplateFromFile(e.parameter['page']).evaluate()
-    .setSandboxMode(HtmlService.SandboxMode.IFRAME).setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .setFaviconUrl("https://i.imgur.com/LKCM9pP.png")
+    .setTitle('Cases Tracker Web');
 }
 
 
