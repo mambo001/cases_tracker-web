@@ -27,6 +27,7 @@ function doInsert(req) {
       country = data.country,
       RMTO = "",
       surveyType = data.surveyType,
+      targeting = data.targeting,
       comments = data.comments,
       surveyDecision = data.surveyDecision,
       startTimeMNL = data.startTime,
@@ -67,7 +68,8 @@ function doInsert(req) {
         AHT,
         numberOfQuestions,
         numberOfInteractions,
-        yearMonth
+        yearMonth,
+        targeting
     ]);
     result = "Insertion successful";
   }

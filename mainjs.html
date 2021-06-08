@@ -521,8 +521,11 @@ function getFormsData(){
       languageInput = document.querySelector('#languageInput'),
       countryInput = document.querySelector('#countryInput'),
       surveyTypeSelect = document.querySelector('#surveyTypeSelect'),
-      surveyTypeSelectInstance = M.FormSelect.getInstance(surveyTypeSelect)
+      surveyTypeSelectInstance = M.FormSelect.getInstance(surveyTypeSelect),
       surveyTypeSelectValue = surveyTypeSelectInstance.el.options[surveyTypeSelectInstance.el.selectedIndex].value,
+      targetingSelect = document.querySelector('#targetingSelect'),
+      targetingSelectInstance = M.FormSelect.getInstance(targetingSelect),
+      targetingSelectValue = targetingSelectInstance.el.options[targetingSelectInstance.el.selectedIndex].value,
 
       rmtoCheckbox = document.querySelector('#rmto'),
       rmtoValue = rmtoCheckbox.checked ? 'yes' : 'no',
@@ -575,6 +578,7 @@ function getFormsData(){
     timesReviewed: timesReviewedSelectValue,
     customerType: customerTypeSelectValue,
     surveyType: surveyTypeSelectValue,
+    targeting: targetingSelectValue,
     startTime: startTime,
     endTime: endTime,
     aht: aht,
