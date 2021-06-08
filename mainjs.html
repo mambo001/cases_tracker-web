@@ -933,6 +933,7 @@ function resetCard2Forms(){
       screenshotTextarea = document.querySelector('#screenshotTextarea'),
       languageInput = document.querySelector('#languageInput'),
       surveyTypeSelect = document.querySelector('#surveyTypeSelect'),
+      targetingSelect = document.querySelector('#targetingSelect'),
       rmtoCheckbox = document.querySelector('#rmto'),
       validElements = Array.from(document.querySelectorAll('.valid')),
       invalidElements = Array.from(document.querySelectorAll('.invalid'));
@@ -947,6 +948,7 @@ function resetCard2Forms(){
   timesReviewed.selectedIndex = 0;
   customerType.selectedIndex = 0;
   surveyTypeSelect.selectedIndex = 0;
+  targetingSelect.selectedIndex = 0;
   // Reset all select elements
   var selectElements = document.querySelectorAll('select');
   var selectInstances = M.FormSelect.init(selectElements, {});
